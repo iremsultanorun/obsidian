@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
       <Navbar/>
      <main>
      {children}
