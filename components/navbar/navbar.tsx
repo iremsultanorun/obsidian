@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Heart, Search, ShoppingBag } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import styles from "./Navbar.module.css"; // Module CSS importu
+import styles from "./Navbar.module.css"; 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
