@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IProduct } from "@/types/product";
 import styles from "./ProductCard.module.css";
-import { Heart, ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
+import { Heart, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface ProductCardProps {
   product: IProduct;
@@ -35,7 +35,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const getSceneTransform = () => {
 
-    if (isClicked) return "translateY(-150px) rotateX(300deg) translateZ(200px)";
+    if (isClicked) return "translateY(-100px) rotateX(310deg) translateZ(150px)";
     
     if ((isHovered&&!isClicked)) return "translateZ(10px)";
     
@@ -54,6 +54,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.innerWidth < 1024) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
@@ -80,7 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <motion.div
         className={`${styles.card} ${isClicked ? styles.cardClicked : ""}`}
         style={{
-          rotateX: isClicked ? "65deg" : tiltX,
+          rotateX: isClicked ? "55deg" : tiltX,
           rotateY: isClicked ? "0deg" : tiltY,
           transformStyle: "preserve-3d",
         }}
@@ -92,17 +93,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <AnimatePresence>
-          {isHovered && !isClicked && (
-            <motion.div
-              onClick={() => setIsClicked(true)}
-              className={styles.clickHint}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              style={{ translateZ: "200px" }}
-            />
-          )}
-        </AnimatePresence>
+  {isHovered && !isClicked && (
+    <motion.div
+      onClick={(e) => {
+        e.stopPropagation(); 
+        if (window.innerWidth < 1024) return;
+        setIsClicked(true);
+      }}
+      className={styles.clickHint}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      whileHover={{ scale: 1.1 }}
+      style={{ translateZ: "60px" }} 
+    >
+
+    </motion.div>
+  )}
+</AnimatePresence>
 
         <motion.div
           className={styles.cubeScene}
@@ -130,7 +138,9 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </motion.div>
               </AnimatePresence>
               
-              {(isHovered && product.images.length>1)&& (
+              {
+                
+              (product.images.length>1)&& (
                 <div className={styles.arrowContainer}>
                   <button className={styles.arrowBtn} onClick={prevImg}><ChevronLeft size={20}/></button>
                   <button className={styles.arrowBtn} onClick={nextImg}><ChevronRight size={20}/></button>
@@ -162,7 +172,20 @@ export default function ProductCard({ product }: ProductCardProps) {
               ))}
             </motion.div>
           )}
-
+<AnimatePresence>
+  {isClicked && (
+    <motion.button
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      onClick={() => setIsClicked(false)}
+      className={styles.exitBtn}
+      style={{ translateZ: "150px" }} 
+    >
+      <X size={16} />
+    </motion.button>
+  )}
+</AnimatePresence>
           {isClicked && <div className={styles.cubeShadow} />}
         </motion.div>
         {isClicked && (
@@ -186,6 +209,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className={styles.productInfo}>
             <span className={styles.category}>{product?.category || product.category}</span>
             <h3 className={styles.title}>{product.title}</h3>
+            <p className={styles.description}>{product.description}</p>
             <span className={styles.price}>{product.price}€</span>
           </div>
 
@@ -194,11 +218,12 @@ export default function ProductCard({ product }: ProductCardProps) {
               DETAILS
             </Link>
             <div className={styles.iconActions}>
-              <button
+            <button
                 className={styles.iconBtn}
                 aria-label="Back"
               >
                 <Heart size={18} />
+
               </button>
               <button
                className={styles.iconBtn} aria-label="Add to cart"
@@ -206,7 +231,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <ShoppingCart size={18} />
               </button>
             </div>
-          </div>
+            </div>
+
         </motion.div>
       </motion.div>
     </div>
