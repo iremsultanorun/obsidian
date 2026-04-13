@@ -27,12 +27,11 @@ export default function ProductCard({ product }: ProductCardProps) {
   const mouseX = useSpring(x, { stiffness: 80, damping: 15 });
   const mouseY = useSpring(y, { stiffness: 80, damping: 15 });
 
-  const tiltX = useTransform(mouseY, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const tiltY = useTransform(mouseX, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const tiltX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  const tiltY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
   const reflectionX = useTransform(mouseX, [-0.5, 0.5], ["-90%", "90%"]);
 
-  const detailsZ = (isHovered && !isClicked) ? "50px" : "2px";
-
+  const detailsZ = (isHovered && !isClicked) ? 50 : 2;
   const getSceneTransform = () => {
 
     if (isClicked) return "translateY(-100px) rotateX(310deg) translateZ(150px)";
@@ -42,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     return "translateY(0px) rotateX(0deg) translateZ(0px)";
     
     };
-
+  
   const nextImg = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImgIndex((prev) => (prev + 1) % Math.min(product.images.length, 4));
@@ -54,7 +53,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 1024) return;
+    // if (window.innerWidth < 1024) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
@@ -72,25 +71,22 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div
       ref={cardRef}
-      className={styles.cardContainer}
+      className={`${styles.cardContainer} ${isClicked ? styles.cardClicked : ""}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setIsHovered(true)}
-      style={{ perspective: "1200px" }}
+
     >
+  
       <motion.div
-        className={`${styles.card} ${isClicked ? styles.cardClicked : ""}`}
+        className={`${styles.card}`}
         style={{
-          rotateX: isClicked ? "55deg" : tiltX,
-          rotateY: isClicked ? "0deg" : tiltY,
-          transformStyle: "preserve-3d",
+          rotateX: isClicked ? 55 : tiltX,
+          rotateY: isClicked ? 0 : tiltY,
+        
         }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
       >
-
-        <div className={styles.glassLayer}>
-          <motion.div className={styles.lightReflex} style={{ x: reflectionX }} />
-        </div>
 
         <AnimatePresence>
   {isHovered && !isClicked && (
@@ -105,7 +101,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
       whileHover={{ scale: 1.1 }}
-      style={{ translateZ: "60px" }} 
+      style={{ translateZ: 60 }}
+
     >
 
     </motion.div>
@@ -116,7 +113,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           className={styles.cubeScene}
           animate={{ transform: getSceneTransform() }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          style={{ transformStyle: "preserve-3d" }}
+         
         >
           {!isClicked ? (
             <div className={styles.standardSlider}>
@@ -180,13 +177,13 @@ export default function ProductCard({ product }: ProductCardProps) {
       exit={{ opacity: 0, scale: 0 }}
       onClick={() => setIsClicked(false)}
       className={styles.exitBtn}
-      style={{ translateZ: "150px" }} 
+      style={{ translateZ: 150 }}
     >
       <X size={16} />
     </motion.button>
   )}
 </AnimatePresence>
-          {isClicked && <div className={styles.cubeShadow} />}
+        
         </motion.div>
         {isClicked && (
           <div className={styles.sliderContainer} onClick={(e) => e.stopPropagation()}>
@@ -235,6 +232,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         </motion.div>
       </motion.div>
+    {
+      !isClicked?  <div className={styles.glassLayer}>
+      <motion.div className={styles.lightReflex} />
+    </div>:""
+    }
     </div>
   );
 }

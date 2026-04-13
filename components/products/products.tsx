@@ -7,7 +7,6 @@ interface ProductsProps {
 }
 
 export default function Products({ products }: ProductsProps) {
-  console.log(products)
   return (
     <section className={styles.container}>
       <header className={styles.header}>

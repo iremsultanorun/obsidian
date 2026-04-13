@@ -9,14 +9,14 @@ let products:IProduct[]=[]
 
  try {
  const response=await fetch(BASE_URL)
- console.log(response)
+
 if(!response.ok){
   throw new Error("Veriler çekilmedi")
 }
 
 const data=await response.json()
 products=data.products.slice(0,16)
-console.log(products)
+
 }
 catch(err) {
   console.error(err)
