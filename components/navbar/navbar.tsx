@@ -50,7 +50,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbarContainer}>
       <div className={styles.navbarLogo}>
-        <Link href="/">OBSIDYEN</Link>
+        <Link href="/">OBSIDIAN</Link>
       </div>
 
       <ul className={styles.navbarLinks}>

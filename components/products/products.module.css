@@ -2,13 +2,11 @@
   max-width: 100%;
   margin: 0 auto;
   padding: 8rem clamp(1rem, 1vw, 2rem);
-
 }
 
 .header {
   margin-bottom: 60px;
   text-align: left;
-
 }
 
 .mainTitle {
@@ -31,5 +29,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 48%, 260px), 1fr));
   gap: clamp(1rem, 2vw, 2rem);
+  row-gap: 5rem;
   justify-content: center;
 }

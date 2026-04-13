@@ -29,7 +29,6 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const tiltX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
   const tiltY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
-  const reflectionX = useTransform(mouseX, [-0.5, 0.5], ["-90%", "90%"]);
 
   const detailsZ = (isHovered && !isClicked) ? 50 : 2;
   const getSceneTransform = () => {
@@ -53,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // if (window.innerWidth < 1024) return;
+    if (window.innerWidth < 1024) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
