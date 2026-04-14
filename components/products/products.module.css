@@ -1,7 +1,7 @@
 .container {
   max-width: 100%;
   margin: 0 auto;
-  padding: 8rem clamp(1rem, 1vw, 2rem);
+  padding: 3rem clamp(1rem, 1vw, 2rem) 2rem clamp(1rem, 1vw, 2rem);
 }
 
 .header {

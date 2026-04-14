@@ -126,7 +126,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 >
                   <Image
                     src={product.images[currentImgIndex]}
-                    alt="product"
+                    alt={product.title}
                     fill
                     sizes="200px"
                     className={styles.cubeImage}
@@ -210,7 +210,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           <div className={styles.actionGroup}>
-            <Link href={`/product/${product.slug}`} className={styles.detailBtn}>
+            <Link href={`/product/${product.id}`} className={styles.detailBtn}>
               DETAILS
             </Link>
             <div className={styles.iconActions}>

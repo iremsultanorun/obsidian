@@ -4,13 +4,14 @@ import styles from "./Products.module.css";
 
 interface ProductsProps {
   products: IProduct[];
+  title:string;
 }
 
-export default function Products({ products }: ProductsProps) {
+export default function Products({ products,title="Curated Collection"  }: ProductsProps) {
   return (
-    <section className={styles.container}>
+    <section id="products-section" className={styles.container}>
       <header className={styles.header}>
-        <h2 className={styles.mainTitle}>Curated Collection</h2>
+        <h2 className={styles.mainTitle}> {title} </h2>
         <p className={styles.subTitle}>Handpicked Architectural Silhouettes</p>
       </header>
 
