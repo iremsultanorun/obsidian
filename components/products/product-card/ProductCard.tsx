@@ -7,7 +7,7 @@ import Link from "next/link";
 import { IProduct } from "@/types/product";
 import styles from "./ProductCard.module.css";
 import { Heart, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
-
+import { useBasketStore } from "@/store/useBasketStore";
 interface ProductCardProps {
   product: IProduct;
 }
@@ -17,7 +17,35 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const addToBasket = useBasketStore((state) => state.addToBasket);
+  const setFlyingImage = useBasketStore((state) => state.setFlyingImage);
 
+    const handleAddToCart = (e: React.MouseEvent) => {
+      e.stopPropagation(); // Card'ın tıklama olaylarını tetiklemesin
+  
+      // 1. O an ekranda görünen resmin elementini bulalım
+      // Küp mü açık yoksa standart slider mı kontrol ediyoruz
+      const activeImageSelector = isClicked ? `.${styles.cubeFace}` : `.${styles.standardSlide}`;
+      const imgElement = e.currentTarget.closest(`.${styles.card}`)?.querySelector(activeImageSelector);
+  
+      if (imgElement) {
+        const rect = imgElement.getBoundingClientRect();
+        
+        // 2. Animasyon verisini store'a gönder
+        setFlyingImage({
+          src: product.images[currentImgIndex],
+          startPos: { 
+            x: rect.left + rect.width / 2, // Resmin tam ortasından başlasın
+            y: rect.top + rect.height / 2 
+          }
+        });
+      }
+  
+      // 3. Ürünü sepete ekle (Zustand persist sayesinde otomatik LocalStorage'a gider)
+      addToBasket(product);
+    };
+  
+    // ... geri kalan kodlar (x, y, tiltX vs.) aynı kalıyor ...
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -221,11 +249,14 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <Heart size={18} />
 
               </button>
-              <button
-               className={styles.iconBtn} aria-label="Add to cart"
-              >
-                <ShoppingCart size={18} />
-              </button>
+
+<button
+  className={styles.iconBtn}
+  aria-label="Add to cart"
+  onClick={handleAddToCart} // Fonksiyonu buraya bağladık
+>
+  <ShoppingCart size={18} />
+</button>
             </div>
             </div>
 

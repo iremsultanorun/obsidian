@@ -89,7 +89,7 @@ export default function Navbar() {
           className={`${styles.iconButton} ${styles.cartButton}`}
           aria-label="View shopping bag"
         >
-          <ShoppingBag size={22} strokeWidth={1.5} />
+          <ShoppingBag id="basket-icon" size={22} strokeWidth={1.5} />
           <span className={styles.cartBadge}>0</span>
         </button>
         <button

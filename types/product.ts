@@ -11,5 +11,4 @@ export interface IProductDetail extends IProduct{
     rating:number,
     stock:number,
     discountPercentage:number,
-
 }

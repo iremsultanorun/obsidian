@@ -3,6 +3,7 @@ import { Manrope} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import FlyingAnimation from "@/components/animation/FlyingAnimaion";
 
 
 
@@ -28,6 +29,7 @@ export default function RootLayout({
      <main>
      {children}
      </main>
+     <FlyingAnimation/>
      <Footer/>
         </body>
     </html>
