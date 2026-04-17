@@ -84,9 +84,11 @@ export default function Navbar() {
           aria-label="Open search">
           <Search size={22} strokeWidth={1.5} />
         </button>
-        <button className={styles.iconButton} aria-label="View favorites">
+       <Link href="/favorite">
+       <button className={styles.iconButton} aria-label="View favorites">
           <Heart size={22} strokeWidth={1.5} />
         </button>
+       </Link>
         <button
           className={`${styles.iconButton} ${styles.cartButton}`}
           aria-label="View shopping bag"

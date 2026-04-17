@@ -1,0 +1,85 @@
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .header {
+    margin-bottom: 60px;
+  }
+  
+  .title {
+    font-size: 5rem;
+    font-weight: 600;
+    letter-spacing: -3px;
+    margin: 0;
+  }
+  
+  .subtitle {
+    font-size: 0.75rem;
+    color: #666;
+    letter-spacing: 2px;
+    margin-top: 10px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 120px;
+  }
+  
+  .cardWrapper {
+    position: relative;
+  }
+  
+  .removeBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 50; 
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .removeBtn:hover {
+    color: #fff;
+  }
+
+  .curatedSection {
+    border-top: 1px solid #222;
+    padding-top: 60px;
+  }
+  
+  .curatedHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+  }
+  
+  .curatedTitle {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+  
+  .curatedDesc {
+    color: #888;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+  
+  .exploreLink {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #444;
+    padding-bottom: 4px;
+  }

@@ -8,24 +8,32 @@ import { IProduct } from "@/types/product";
 import styles from "./ProductCard.module.css";
 import { Heart, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useAddToBasket } from "@/hooks/useAddToBasket";
+import { useFavoriteStore } from "@/store/useFavoriteStore";
+import { useAddToFavorite } from "@/hooks/useAddToFavorite";
+import FavoriteButton from "@/components/common/FavoriteButton";
 
 interface ProductCardProps {
   product: IProduct;
+  
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null); 
+  const galleryRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
-  
-  const addToBasket = useAddToBasket();
 
+  const addToBasket = useAddToBasket();
+  const addToFavorite = useAddToFavorite();
+  const { isFavorite } = useFavoriteStore();
+
+  const favorited = isFavorite(product.id);
+  const MotionHeart = motion(Heart);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sliderX = useMotionValue(0);
-  
+
   const mouseX = useSpring(x, { stiffness: 80, damping: 15 });
   const mouseY = useSpring(y, { stiffness: 80, damping: 15 });
 
@@ -40,7 +48,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     if (isHovered && !isClicked) return "translateZ(10px)";
     return "translateY(0px) rotateX(0deg) translateZ(0px)";
   };
-
   const nextImg = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImgIndex((prev) => (prev + 1) % Math.min(product.images.length, 4));
@@ -50,7 +57,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     e.stopPropagation();
     setCurrentImgIndex((prev) => (prev - 1 + Math.min(product.images.length, 4)) % Math.min(product.images.length, 4));
   };
-
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (window.innerWidth < 1024 || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
@@ -58,18 +64,13 @@ export default function ProductCard({ product }: ProductCardProps) {
     y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-    setIsHovered(false);
-  };
 
   return (
     <div
       ref={cardRef}
       className={`${styles.cardContainer} ${isClicked ? styles.cardClicked : ""}`}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={() => { x.set(0); y.set(0); setIsHovered(false); }}
       onMouseEnter={() => setIsHovered(true)}
     >
       <motion.div
@@ -99,7 +100,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </AnimatePresence>
 
         <motion.div
-          ref={galleryRef} 
+          ref={galleryRef}
           className={styles.cubeScene}
           animate={{ transform: getSceneTransform() }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
@@ -123,7 +124,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                   />
                 </motion.div>
               </AnimatePresence>
-
               {product.images.length > 1 && (
                 <div className={styles.arrowContainer}>
                   <button className={styles.arrowBtn} onClick={prevImg}><ChevronLeft size={20} /></button>
@@ -147,7 +147,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 >
                   <Image
                     src={product.images[index % product.images.length]}
-                    alt="product face"
+                    alt="face"
                     fill
                     sizes="200px"
                     className={styles.cubeImage}
@@ -156,7 +156,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               ))}
             </motion.div>
           )}
-          
+
           <AnimatePresence>
             {isClicked && (
               <motion.button
@@ -194,31 +194,30 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className={styles.productInfo}>
             <span className={styles.category}>{product.category}</span>
             <h3 className={styles.title}>{product.title}</h3>
-            <p className={styles.description}>{product.description}</p>
             <span className={styles.price}>{product.price}€</span>
           </div>
 
           <div className={styles.actionGroup}>
-            <Link href={`/product/${product.id}`} className={styles.detailBtn}>
-              DETAILS
-            </Link>
-            <div className={styles.iconActions}>
-              <button className={styles.iconBtn} aria-label="Add to wishlist">
-                <Heart size={18} />
-              </button>
+                <Link href={`/product/${product.id}`} className={styles.detailBtn}>
+                  DETAILS
+                </Link>
+                <div className={styles.iconActions}>
+                <FavoriteButton product={product} variant="card" />
 
-              <button
-                className={styles.iconBtn}
-                aria-label="Add to cart"
-                onClick={(e) => addToBasket(e, product, undefined, galleryRef)} 
-              >
-                <ShoppingCart size={18} />
-              </button>
-            </div>
+                    <button
+                      className={styles.iconBtn}
+                      aria-label="Add to cart"
+                      onClick={(e) => addToBasket(e, product, undefined, galleryRef)}
+                    >
+                      <ShoppingCart size={18} />
+                    </button>
+                </div>
+          
+      
           </div>
         </motion.div>
       </motion.div>
-      
+
       {!isClicked && (
         <div className={styles.glassLayer}>
           <motion.div className={styles.lightReflex} />
