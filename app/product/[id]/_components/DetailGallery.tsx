@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./DetailGallery.module.css";
 import { motion, AnimatePresence } from "framer-motion";
+import { useBasketStore } from "@/store/useBasketStore";
 
 interface Props {
   images: string[];
@@ -30,7 +31,30 @@ const variants = {
 
 export default function ProductGallery({ images, title }: Props) {
   const [[selectedImg, direction], setSelectedImg] = useState([0, 0]);
-
+  const setMainImagePos = useBasketStore(state => state.setMainImagePos);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const updatePos = () => {
+      if (galleryRef.current) {
+        const rect = galleryRef.current.getBoundingClientRect();
+        setMainImagePos({
+          left: rect.left,
+          top: rect.top,
+          width: rect.width,
+          height: rect.height
+        });
+      }
+    };
+  
+    updatePos(); 
+    window.addEventListener('scroll', updatePos);
+    window.addEventListener('resize', updatePos);
+  
+    return () => {
+      window.removeEventListener('scroll', updatePos);
+      window.removeEventListener('resize', updatePos);
+    };
+  }, [selectedImg, setMainImagePos]);
   const paginate = (newDirection: number) => {
     let nextIndex = selectedImg + newDirection;
     if (nextIndex < 0) nextIndex = images.length - 1;
@@ -40,7 +64,7 @@ export default function ProductGallery({ images, title }: Props) {
 
   return (
     <div className={styles.visualSection}>
-      <div className={styles.mainImageWrapper}>
+      <div ref={galleryRef}className={styles.mainImageWrapper}>
 
         {images.length > 1 && (
           <div className={styles.controls}>

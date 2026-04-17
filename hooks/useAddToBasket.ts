@@ -2,12 +2,18 @@ import { useBasketStore } from "@/store/useBasketStore";
 import { IProduct } from "@/types/product";
 
 export const useAddToBasket = () => {
-  const { addToBasket, setFlyingImage } = useBasketStore();
+  const { addToBasket, setFlyingImage, mainImagePos } = useBasketStore();
 
-  const handleAddToBasket = (e: React.MouseEvent, product: IProduct, specificImage?: string,imageRef?: React.RefObject<HTMLDivElement | null>) => {
-    const targetElement = imageRef?.current || (e.currentTarget as HTMLElement);
-    const rect = targetElement.getBoundingClientRect();
-    
+  const handleAddToBasket = (e: React.MouseEvent, product: IProduct, specificImage?: string, imageRef?: React.RefObject<HTMLDivElement | null>) => {
+
+    let rect;
+    if (imageRef?.current) {
+      rect = imageRef.current.getBoundingClientRect();
+    } else if (mainImagePos) {
+      rect = mainImagePos;
+    } else {
+      rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    }
     const imageToFly = specificImage || product.images[0];
 
     setFlyingImage({

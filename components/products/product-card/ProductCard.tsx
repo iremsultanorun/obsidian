@@ -15,34 +15,32 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null); 
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
-const addToBasket=useAddToBasket();
+  
+  const addToBasket = useAddToBasket();
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
   const sliderX = useMotionValue(0);
-  const cubeRotation = useTransform(sliderX, [0, 200], [0, -360]);
-
+  
   const mouseX = useSpring(x, { stiffness: 80, damping: 15 });
   const mouseY = useSpring(y, { stiffness: 80, damping: 15 });
 
+  const cubeRotation = useTransform(sliderX, [0, 200], [0, -360]);
   const tiltX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
   const tiltY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
 
   const detailsZ = (isHovered && !isClicked) ? 50 : 2;
-  const getSceneTransform = () => {
 
+  const getSceneTransform = () => {
     if (isClicked) return "translateY(-100px) rotateX(310deg) translateZ(150px)";
-    
-    if ((isHovered&&!isClicked)) return "translateZ(10px)";
-    
+    if (isHovered && !isClicked) return "translateZ(10px)";
     return "translateY(0px) rotateX(0deg) translateZ(0px)";
-    
-    };
-  
+  };
+
   const nextImg = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImgIndex((prev) => (prev + 1) % Math.min(product.images.length, 4));
@@ -54,13 +52,10 @@ const addToBasket=useAddToBasket();
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 1024) return;
-    if (!cardRef.current) return;
+    if (window.innerWidth < 1024 || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    x.set((e.clientX - rect.left) / width - 0.5);
-    y.set((e.clientY - rect.top) / height - 0.5);
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
@@ -76,45 +71,38 @@ const addToBasket=useAddToBasket();
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setIsHovered(true)}
-
     >
-  
       <motion.div
-        className={`${styles.card}`}
+        className={styles.card}
         style={{
           rotateX: isClicked ? 55 : tiltX,
           rotateY: isClicked ? 0 : tiltY,
-        
         }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
       >
-
         <AnimatePresence>
-  {isHovered && !isClicked && (
-    <motion.div
-      onClick={(e) => {
-        e.stopPropagation(); 
-        if (window.innerWidth < 1024) return;
-        setIsClicked(true);
-      }}
-      className={styles.clickHint}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0 }}
-      whileHover={{ scale: 1.1 }}
-      style={{ translateZ: 60 }}
-
-    >
-
-    </motion.div>
-  )}
-</AnimatePresence>
+          {isHovered && !isClicked && (
+            <motion.div
+              onClick={(e) => {
+                e.stopPropagation();
+                if (window.innerWidth < 1024) return;
+                setIsClicked(true);
+              }}
+              className={styles.clickHint}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              whileHover={{ scale: 1.1 }}
+              style={{ translateZ: 60 }}
+            />
+          )}
+        </AnimatePresence>
 
         <motion.div
+          ref={galleryRef} 
           className={styles.cubeScene}
           animate={{ transform: getSceneTransform() }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-         
         >
           {!isClicked ? (
             <div className={styles.standardSlider}>
@@ -135,13 +123,11 @@ const addToBasket=useAddToBasket();
                   />
                 </motion.div>
               </AnimatePresence>
-              
-              {
-                
-              (product.images.length>1)&& (
+
+              {product.images.length > 1 && (
                 <div className={styles.arrowContainer}>
-                  <button className={styles.arrowBtn} onClick={prevImg}><ChevronLeft size={20}/></button>
-                  <button className={styles.arrowBtn} onClick={nextImg}><ChevronRight size={20}/></button>
+                  <button className={styles.arrowBtn} onClick={prevImg}><ChevronLeft size={20} /></button>
+                  <button className={styles.arrowBtn} onClick={nextImg}><ChevronRight size={20} /></button>
                 </div>
               )}
             </div>
@@ -161,7 +147,7 @@ const addToBasket=useAddToBasket();
                 >
                   <Image
                     src={product.images[index % product.images.length]}
-                    alt="p"
+                    alt="product face"
                     fill
                     sizes="200px"
                     className={styles.cubeImage}
@@ -170,22 +156,23 @@ const addToBasket=useAddToBasket();
               ))}
             </motion.div>
           )}
-<AnimatePresence>
-  {isClicked && (
-    <motion.button
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0 }}
-      onClick={() => setIsClicked(false)}
-      className={styles.exitBtn}
-      style={{ translateZ: 150 }}
-    >
-      <X size={16} />
-    </motion.button>
-  )}
-</AnimatePresence>
-        
+          
+          <AnimatePresence>
+            {isClicked && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                onClick={() => setIsClicked(false)}
+                className={styles.exitBtn}
+                style={{ translateZ: 150 }}
+              >
+                <X size={16} />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </motion.div>
+
         {isClicked && (
           <div className={styles.sliderContainer} onClick={(e) => e.stopPropagation()}>
             <div className={styles.sliderLine} />
@@ -205,7 +192,7 @@ const addToBasket=useAddToBasket();
           transition={{ type: "spring", stiffness: 120, damping: 20 }}
         >
           <div className={styles.productInfo}>
-            <span className={styles.category}>{product?.category || product.category}</span>
+            <span className={styles.category}>{product.category}</span>
             <h3 className={styles.title}>{product.title}</h3>
             <p className={styles.description}>{product.description}</p>
             <span className={styles.price}>{product.price}€</span>
@@ -216,31 +203,27 @@ const addToBasket=useAddToBasket();
               DETAILS
             </Link>
             <div className={styles.iconActions}>
-            <button
-                className={styles.iconBtn}
-                aria-label="Back"
-              >
+              <button className={styles.iconBtn} aria-label="Add to wishlist">
                 <Heart size={18} />
-
               </button>
 
-<button
-  className={styles.iconBtn}
-  aria-label="Add to cart"
-  onClick={(e)=>addToBasket(e,product)}
->
-  <ShoppingCart size={18} />
-</button>
+              <button
+                className={styles.iconBtn}
+                aria-label="Add to cart"
+                onClick={(e) => addToBasket(e, product, undefined, galleryRef)} 
+              >
+                <ShoppingCart size={18} />
+              </button>
             </div>
-            </div>
-
+          </div>
         </motion.div>
       </motion.div>
-    {
-      !isClicked?  <div className={styles.glassLayer}>
-      <motion.div className={styles.lightReflex} />
-    </div>:""
-    }
+      
+      {!isClicked && (
+        <div className={styles.glassLayer}>
+          <motion.div className={styles.lightReflex} />
+        </div>
+      )}
     </div>
   );
 }

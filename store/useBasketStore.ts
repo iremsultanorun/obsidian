@@ -11,12 +11,14 @@ interface BasketState {
     items: ICartItem[];
     activeModal: ModalType;
     flyingImage: { src: string; startPos: { x: number; y: number } } | null;
+    mainImagePos: { left: number; top: number; width: number; height: number } | null;
     addToBasket: (product: IProduct) => void;
     decreaseQuantity: (productId: number) => void;
     removeFromBasket: (productId: number) => void;
     setFlyingImage: (data: { src: string; startPos: { x: number; y: number } } | null) => void;
     setActiveModal: (modal: ModalType) => void;
     closeAllModals: () => void;
+setMainImagePos: (pos: { left: number; top: number; width: number; height: number } | null) => void;
 }
 
 export const useBasketStore = create<BasketState>()(
@@ -25,6 +27,7 @@ export const useBasketStore = create<BasketState>()(
             items: [],
             flyingImage: null,
             activeModal: null,
+            mainImagePos: null,
             setActiveModal: (modal) => set({ activeModal: modal }),
             closeAllModals: () => set({ activeModal: null }),
             addToBasket: (product) =>
@@ -59,6 +62,7 @@ export const useBasketStore = create<BasketState>()(
                     items: state.items.filter((item) => item.id !== productId),
                 })),
             setFlyingImage: (data) => set({ flyingImage: data }),
+            setMainImagePos: (pos) => set({ mainImagePos: pos }),
         }),
 
         {
