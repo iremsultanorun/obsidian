@@ -1,17 +1,22 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { IProduct } from "@/types/product";
+import { useNotificationStore } from "./useNotificationStore";
 
 export interface ICartItem extends IProduct {
     quantity: number;
 }
-
+type ModalType = 'basket' | 'search' | 'menu' | null;
 interface BasketState {
     items: ICartItem[];
+    activeModal: ModalType;
     flyingImage: { src: string; startPos: { x: number; y: number } } | null;
     addToBasket: (product: IProduct) => void;
+    decreaseQuantity: (productId: number) => void;
     removeFromBasket: (productId: number) => void;
     setFlyingImage: (data: { src: string; startPos: { x: number; y: number } } | null) => void;
+    setActiveModal: (modal: ModalType) => void;
+    closeAllModals: () => void;
 }
 
 export const useBasketStore = create<BasketState>()(
@@ -19,11 +24,18 @@ export const useBasketStore = create<BasketState>()(
         (set) => ({
             items: [],
             flyingImage: null,
+            activeModal: null,
+            setActiveModal: (modal) => set({ activeModal: modal }),
+            closeAllModals: () => set({ activeModal: null }),
             addToBasket: (product) =>
                 set((state) => {
                     const existingItem = state.items.find((item) => item.id === product.id);
 
                     if (existingItem) {
+                        if(existingItem.quantity>=10){
+                            useNotificationStore.getState().showNotification("Maksimum 10 adet ekleyebilirsiniz.", "error");
+                            return state
+                        }
                         return {
                             items: state.items.map((item) =>
                                 item.id === product.id
@@ -34,6 +46,13 @@ export const useBasketStore = create<BasketState>()(
                     }
                     return { items: [...state.items, { ...product, quantity: 1 }] };
                 }),
+                decreaseQuantity: (productId) => set((state) => ({
+                    items: state.items.map(i => 
+                        i.id === productId && i.quantity > 1 
+                        ? { ...i, quantity: i.quantity - 1 } 
+                        : i
+                    )
+                })),
 
             removeFromBasket: (productId) =>
                 set((state) => ({

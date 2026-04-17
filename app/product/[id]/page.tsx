@@ -1,8 +1,9 @@
-import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw, Star } from "lucide-react";
+import { ShieldCheck, Truck, RotateCcw, Star } from "lucide-react";
 import styles from "./product.module.css";
 import { IProductDetail } from "@/types/product";
 import Products from "@/components/products/Products";
 import DetailGallery from "./_components/DetailGallery"
+import ProductDetailActions from "./_components/ProductDetailActions";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -11,7 +12,6 @@ interface Props {
 export default async function ProductDetailPage({ params }: Props) {
   const { id } = await params;
   const BASE_URL = `https://dummyjson.com/products/${id}`;
-
   let product: IProductDetail | null = null;
   let relatedProducts = [];
 
@@ -60,10 +60,7 @@ export default async function ProductDetailPage({ params }: Props) {
             <p className={styles.description}>{product.description}</p>
           </div>
 
-          <div className={styles.actions}>
-            <button className={styles.addCartBtn}><ShoppingCart size={20} /> ADD TO BAG</button>
-            <button className={styles.wishlistBtn}><Heart size={22} /></button>
-          </div>
+      <ProductDetailActions product={product}/>
 
           <div className={styles.trustSignals}>
             <div className={styles.signal}><Truck size={20} /><div><strong>Express Delivery</strong><span>2-4 business days</span></div></div>

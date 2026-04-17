@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import FlyingAnimation from "@/components/animation/FlyingAnimaion";
+import ModalManager from "@/components/modals/ModalManager";
+import GlobalAlert from "@/components/ui/GlobalAlert";
 
 
 
@@ -25,11 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable}`}>
       <body suppressHydrationWarning>
+      <GlobalAlert />
       <Navbar/>
      <main>
      {children}
      </main>
      <FlyingAnimation/>
+     <ModalManager/>
      <Footer/>
         </body>
     </html>

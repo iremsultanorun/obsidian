@@ -5,7 +5,8 @@ import { Heart, Search, ShoppingBag } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import styles from "./Navbar.module.css"; 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useBasketStore } from "@/store/useBasketStore";
 
 interface NavLink {
   name: string,
@@ -38,15 +39,16 @@ const letterVariants: Variants = {
 export default function Navbar() {
 
   const path = usePathname()
-  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { items, setActiveModal,activeModal } = useBasketStore();
+  const cartCount = items.length;
   useEffect(() => {
-    if (isOpen) {
+    if (activeModal==="menu") {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [isOpen]);
+  }, [activeModal]);
   return (
     <nav className={styles.navbarContainer}>
       <div className={styles.navbarLogo}>
@@ -78,7 +80,7 @@ export default function Navbar() {
       </ul>
 
       <div className={styles.navbarIcons}>
-        <button className={styles.iconButton} onClick={() => setIsSearchOpen(true)}
+        <button className={styles.iconButton} onClick={() => setActiveModal("search")}
           aria-label="Open search">
           <Search size={22} strokeWidth={1.5} />
         </button>
@@ -88,23 +90,28 @@ export default function Navbar() {
         <button
           className={`${styles.iconButton} ${styles.cartButton}`}
           aria-label="View shopping bag"
+          onClick={() => setActiveModal('basket')}
         >
           <ShoppingBag id="basket-icon" size={22} strokeWidth={1.5} />
-          <span className={styles.cartBadge}>0</span>
+          <span className={styles.cartBadge}>
+        
+          <span className={styles.badge}>{cartCount > 0 ?cartCount:0}</span>
+     
+            </span>
         </button>
         <button
           className={styles.menuButton}
-          onClick={() => setIsOpen(!isOpen)}
+        onClick={()=>{setActiveModal("menu")}}
           aria-label="Toggle menu"
         >
-          <div className={`${styles.hamburger} ${isOpen ? styles.open : ""}`}>
+          <div className={`${styles.hamburger} ${activeModal==="menu" ? styles.open : ""}`}>
             <span></span>
             <span></span>
           </div>
         </button>
       </div>
       <AnimatePresence>
-        {isOpen && (
+        {activeModal==="menu" && (
           <motion.div
             initial={{ clipPath: "circle(0% at 0% 100%)", opacity: 0 }}
             animate={{ clipPath: "circle(150% at 0% 100%)", opacity: 1 }}
@@ -120,7 +127,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + i * 0.1 }}
                 >
-                  <Link href={link.href} onClick={() => setIsOpen(false)}>
+                  <Link href={link.href} onClick={() =>setActiveModal(null)}>
                     {link.name}
                   </Link>
                 </motion.li>

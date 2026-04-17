@@ -1,167 +1,166 @@
 .gridWrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 12px;
-    padding: 16px;
-    background: #111;
-    border-radius: 16px;
-    margin: 10rem 0;
-  }
-  
-  .card {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .cardLeft {
-    grid-column: 1;
-    grid-row: 1 / 3;
-    min-height: 600px;
-    background: url('/bentoGrid/archive.png') center/cover no-repeat;
-  }
-  
-  .cardTopRight {
-    grid-column: 2;
-    grid-row: 1;
-    min-height: 200px;
-    background: url('/bentoGrid/boutique.png') center/cover no-repeat;
-  }
-  
-  .cardJournal {
-    min-height: 180px;
-    background: url('/bentoGrid/metarial.png') center/cover no-repeat;
-  }
-  
-  .overlay {
-    position: absolute;
-inset: 0;
-    background: rgba(0, 0, 0, 0.754);
-    transition: 0.3s;
-  }
-  
-  .card:hover .overlay {
-    background: rgba(0, 0, 0, 0.02);
-  }
-  
-  .cardContent {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .cardContentCenter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+  padding: 16px;
+  background: #111;
+  border-radius: 16px;
+  margin: 10rem 0;
+}
+
+.card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cardLeft {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  min-height: 600px;
+  background: url('/bentoGrid/archive.png') center/cover no-repeat;
+}
+
+.cardTopRight {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 200px;
+  background: url('/bentoGrid/boutique.png') center/cover no-repeat;
+}
+
+.cardJournal {
+  min-height: 180px;
+  background: url('/bentoGrid/metarial.png') center/cover no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.754);
+  transition: 0.7s;
+}
+
+.card:hover .overlay {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.cardContent {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardContentCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.labelTag {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cardSubtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.boutiqueTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.journalLabel {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.journalTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.arrowIcon {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+}
+
+.cardDispatch {
+  border-radius: 14px;
+  background: #1d1d1d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 180px;
+}
+
+.truckIcon {
+  width: 36px;
+  height: 36px;
+}
+
+.dispatchTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.dispatchSub {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.bottomRightRow {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .gridWrap {
+    grid-template-columns: 1fr;
   }
 
-  .labelTag {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.7);
-    text-transform: uppercase;
-  }
-  
-  .cardTitle {
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-  }
-  
-  .cardSubtitle {
-    font-size: 13px;
-    color: rgba(255,255,255,0.6);
-  }
-  
-  .boutiqueTitle {
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  
-  .journalLabel {
-    font-size: 10px;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-  }
-  
-  .journalTitle {
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
-  }
-  
-  .arrowIcon {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    color: rgba(255,255,255,0.7);
-    z-index: 2;
-  }
-  
-  .cardDispatch {
-    border-radius: 14px;
-    background: #1d1d1d;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    min-height: 180px;
-  }
-  
-  .truckIcon {
-    width: 36px;
-    height: 36px;
-  }
-  
-  .dispatchTitle {
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
-  }
-  
-  .dispatchSub {
-    font-size: 10px;
-    color: rgba(255,255,255,0.4);
-    text-transform: uppercase;
-  }
-  
-  /* GRID */
+  .cardLeft,
+  .cardTopRight,
   .bottomRightRow {
-    grid-column: 2;
-    grid-row: 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-column: auto;
+    grid-row: auto;
   }
-  
-  @media (max-width: 768px) {
-    .gridWrap {
-      grid-template-columns: 1fr;
-    }
-  
-    .cardLeft,
-    .cardTopRight,
-    .bottomRightRow {
-      grid-column: auto;
-      grid-row: auto;
-    }
+}
+
+@media (max-width: 450px) {
+  .bottomRightRow {
+    grid-template-columns: 1fr;
   }
-  
-  @media (max-width: 450px) {
-    .bottomRightRow {
-      grid-template-columns: 1fr;
-    }
-  }
+}

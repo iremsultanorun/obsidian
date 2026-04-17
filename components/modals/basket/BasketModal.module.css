@@ -1,0 +1,146 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 150;
+}
+
+.modal {
+  position: fixed;
+  top: 10px; 
+  right: 10px;
+  bottom: 10px;
+  width: 100%;
+  max-width: 380px;
+  background: #141414; /* Görseldeki koyu gri/siyah ton */
+  z-index: 1000;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+  overflow: visible; /* Dikey butonun görünmesi için */
+}
+
+.header {
+  padding: 30px 24px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ÜRÜN KARTI TASARIMI */
+.cartItem {
+  background: #1c1c1c; /* Kart arka planı */
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.itemImage {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #252525;
+}
+
+.itemDetails {
+  flex: 1;
+}
+
+.itemDetails h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.itemDetails p {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.itemPriceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* MİKTAR SEÇİCİ */
+.quantitySelector {
+  background: #252525;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.qtyBtn {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 16px;
+}
+.removeBtn{
+  margin-left: 20px;
+}
+/* STICKY FOOTER */
+.footer {
+  padding: 24px;
+  background: #141414;
+  border-top: 1px solid #222;
+  border-radius: 0 0 24px 24px;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.checkoutBtn {
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.checkoutBtn:active {
+  transform: scale(0.98);
+}
