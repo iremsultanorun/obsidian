@@ -1,6 +1,6 @@
 import { ShieldCheck, Truck, RotateCcw, Star } from "lucide-react";
 import styles from "./product.module.css";
-import { IProductDetail } from "@/types/product";
+import { IProduct, IProductDetail } from "@/types/product";
 import Products from "@/components/products/Products";
 import DetailGallery from "./_components/DetailGallery"
 import ProductDetailActions from "./_components/ProductDetailActions";
@@ -24,7 +24,7 @@ export default async function ProductDetailPage({ params }: Props) {
     const relatedData = await relatedRes.json();
 
     relatedProducts = relatedData.products
-      .filter((item: any) => item.id !== Number(id))
+      .filter((item: IProduct) => item.id !== Number(id))
       .slice(0, 4);
 
   } catch (err) {

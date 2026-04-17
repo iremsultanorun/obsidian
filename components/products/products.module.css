@@ -27,7 +27,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 48%, 260px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(clamp(300px, 48%, 260px), 1fr));
   gap: clamp(1rem, 2vw, 2rem);
   row-gap: 5rem;
   justify-content: center;

@@ -6,7 +6,7 @@ interface NotificationState {
   message: string | null;
   type: NotificationType;
   isVisible: boolean;
-  // Aksiyonlar
+
   showNotification: (message: string, type?: NotificationType) => void;
   hideNotification: () => void;
 }
@@ -19,7 +19,6 @@ export const useNotificationStore = create<NotificationState>((set) => ({
   showNotification: (message, type = "error") => {
     set({ message, type, isVisible: true });
     
-    // 3 saniye sonra otomatik kapat
     setTimeout(() => {
       set({ isVisible: false });
     }, 3000);

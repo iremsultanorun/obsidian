@@ -2,13 +2,14 @@
 
 import { useBasketStore } from "@/store/useBasketStore";
 import { motion, AnimatePresence } from "framer-motion";
-import { X,Trash2, Minus, Plus } from "lucide-react";
+import { X} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./BasketModal.module.css";
+import BasketQuantityControl from "@/app/basket/_components/BasketQuantityControl";
 
 export default function BasketModal() {
-  const { items, activeModal, setActiveModal, addToBasket, removeFromBasket,decreaseQuantity } = useBasketStore();
+  const { items, activeModal, setActiveModal} = useBasketStore();
   
   const isOpen = activeModal === "basket";
   const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -56,12 +57,7 @@ export default function BasketModal() {
                       <div className={styles.itemPriceRow}>
                         <span className={styles.price}>${item.price.toFixed(2)}</span>
                         
-                        <div className={styles.quantitySelector}>
-                          <button className={styles.qtyBtn} onClick={() => decreaseQuantity(item.id)}><Minus size={14}/></button>
-                          <span style={{color: '#fff', fontSize: '14px', fontWeight: '700'}}>{item.quantity}</span>
-                          <button className={styles.qtyBtn} onClick={() => addToBasket(item)}><Plus size={14}/></button>
-                          <button className={`${styles.qtyBtn} ${styles.removeBtn}`} onClick={() => removeFromBasket(item.id)}><Trash2 size={14}/></button>
-                        </div>
+                       <BasketQuantityControl item={item}  />
                       </div>
                     </div>
                   </div>

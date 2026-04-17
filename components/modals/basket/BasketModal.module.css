@@ -13,13 +13,13 @@
   bottom: 10px;
   width: 100%;
   max-width: 380px;
-  background: #141414; /* Görseldeki koyu gri/siyah ton */
+  background: #141414;
   z-index: 1000;
   border-radius: 24px;
   display: flex;
   flex-direction: column;
   box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-  overflow: visible; /* Dikey butonun görünmesi için */
+  overflow: visible; 
 }
 
 .header {
@@ -44,9 +44,9 @@
   gap: 16px;
 }
 
-/* ÜRÜN KARTI TASARIMI */
+
 .cartItem {
-  background: #1c1c1c; /* Kart arka planı */
+  background: #1c1c1c;
   border-radius: 16px;
   padding: 16px;
   display: flex;
@@ -91,27 +91,8 @@
   color: #fff;
 }
 
-/* MİKTAR SEÇİCİ */
-.quantitySelector {
-  background: #252525;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 4px 12px;
-  border-radius: 20px;
-}
 
-.qtyBtn {
-  background: none;
-  border: none;
-  color: #888;
-  cursor: pointer;
-  font-size: 16px;
-}
-.removeBtn{
-  margin-left: 20px;
-}
-/* STICKY FOOTER */
+
 .footer {
   padding: 24px;
   background: #141414;

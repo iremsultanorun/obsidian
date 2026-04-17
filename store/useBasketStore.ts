@@ -36,6 +36,7 @@ export const useBasketStore = create<BasketState>()(
 
                     if (existingItem) {
                         if(existingItem.quantity>=10){
+                            flyingImage:null
                             useNotificationStore.getState().showNotification("Maksimum 10 adet ekleyebilirsiniz.", "error");
                             return state
                         }

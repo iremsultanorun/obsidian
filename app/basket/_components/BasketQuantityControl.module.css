@@ -1,0 +1,42 @@
+.quantitySelector {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 4px 8px;
+    gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .qtyBtn {
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .qtyBtn:hover {
+    color: #fff;
+  }
+  
+  .quantityText {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 20px;
+    text-align: center;
+  }
+  
+  .removeBtn {
+    margin-left: 4px;
+    color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .removeBtn:hover {
+    color: #ff4d4d; 
+  }
