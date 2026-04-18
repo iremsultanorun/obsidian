@@ -38,7 +38,7 @@ export default function FavoritesPage() {
               Based on your recent aesthetic choices, our editors have selected these pieces to complete your Obsidian wardrobe.
             </p>
           </div>
-          <Link href="/" className={styles.exploreLink}>EXPLORE FULL BOUTIQUE</Link>
+          <Link href="/#products-section" className={styles.exploreLink}>EXPLORE FULL BOUTIQUE</Link>
         </div>
       </section>
     </div>

@@ -42,8 +42,7 @@ export default function Hero() {
             </p>
             
             <Link 
-              href="#products-section" 
-              scroll={false} 
+              href="/#products-section" 
               className={styles.exploreBtn}
             >
               EXPLORE NOW

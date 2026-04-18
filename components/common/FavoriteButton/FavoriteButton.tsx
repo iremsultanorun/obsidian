@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { IProduct } from "@/types/product";
@@ -11,13 +10,11 @@ const MotionHeart = motion(Heart);
 
 export default function FavoriteButton({ product, variant = "card" }: { product: IProduct, variant?: "card" | "detail" }) {
   const toggleFavorite = useAddToFavorite();
-  
-  // Zustand store'undan sadece ihtiyacımız olan fonksiyonu ve veriyi alıyoruz
 
   const favorited = useSyncExternalStore(
     useFavoriteStore.subscribe,
     () => useFavoriteStore.getState().isFavorite(product.id),
-    () => false  // server'da default değer
+    () => false 
   );
   const buttonClass = variant === "detail" ? styles.wishlistBtn : styles.iconBtn;
 
@@ -25,7 +22,7 @@ export default function FavoriteButton({ product, variant = "card" }: { product:
     <button
       className={`${buttonClass} ${favorited ? styles.activeFavorite : ""}`}
       aria-label="Add to wishlist"
-      onClick={(e) => toggleFavorite(e, product, favorited)} // Durumu dışarıdan gönderiyoruz
+      onClick={(e) => toggleFavorite(e, product, favorited)} 
     >
       <MotionHeart
         size={variant === "detail" ? 22 : 18}

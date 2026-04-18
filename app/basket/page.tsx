@@ -48,7 +48,7 @@ export default function BasketPage() {
 
           <div className={styles.continueCard}>
             <p>Curate your collection further</p>
-            <Link href="/" className={styles.continueBtn}>CONTINUE BROWSING</Link>
+            <Link href="/#products-section" className={styles.continueBtn}>CONTINUE BROWSING</Link>
           </div>
         </div>
 

@@ -6,15 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { IProduct } from "@/types/product";
 import styles from "./ProductCard.module.css";
-import { Heart, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
+import {  ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useAddToBasket } from "@/hooks/useAddToBasket";
-import { useFavoriteStore } from "@/store/useFavoriteStore";
-import { useAddToFavorite } from "@/hooks/useAddToFavorite";
-import FavoriteButton from "@/components/common/FavoriteButton";
+import FavoriteButton from "@/components/common/FavoriteButton/FavoriteButton";
 
 interface ProductCardProps {
   product: IProduct;
-  
+
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -25,11 +23,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
   const addToBasket = useAddToBasket();
-  const addToFavorite = useAddToFavorite();
-  const { isFavorite } = useFavoriteStore();
-
-  const favorited = isFavorite(product.id);
-  const MotionHeart = motion(Heart);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sliderX = useMotionValue(0);
@@ -198,22 +191,22 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           <div className={styles.actionGroup}>
-                <Link href={`/product/${product.id}`} className={styles.detailBtn}>
-                  DETAILS
-                </Link>
-                <div className={styles.iconActions}>
-                <FavoriteButton product={product} variant="card" />
+            <Link href={`/product/${product.id}`} className={styles.detailBtn}>
+              DETAILS
+            </Link>
+            <div className={styles.iconActions}>
+              <FavoriteButton product={product} variant="card" />
 
-                    <button
-                      className={styles.iconBtn}
-                      aria-label="Add to cart"
-                      onClick={(e) => addToBasket(e, product, undefined, galleryRef)}
-                    >
-                      <ShoppingCart size={18} />
-                    </button>
-                </div>
-          
-      
+              <button
+                className={styles.iconBtn}
+                aria-label="Add to cart"
+                onClick={(e) => addToBasket(e, product, undefined, galleryRef)}
+              >
+                <ShoppingCart size={18} />
+              </button>
+            </div>
+
+
           </div>
         </motion.div>
       </motion.div>

@@ -4,7 +4,7 @@ import styles from "./../product.module.css";
 import { useAddToBasket } from "@/hooks/useAddToBasket";
 import { IProductDetail } from "@/types/product";
 
-import FavoriteButton from "@/components/common/FavoriteButton";
+import FavoriteButton from "@/components/common/FavoriteButton/FavoriteButton";
 export default function ProductDetailActions({ product }: { product: IProductDetail }) {
   const addToBasket = useAddToBasket()
   return (
@@ -12,7 +12,7 @@ export default function ProductDetailActions({ product }: { product: IProductDet
       <button className={styles.addCartBtn}
         onClick={(e) => addToBasket(e, product)}
       ><ShoppingCart size={20} /> ADD TO BAG</button>
-  <FavoriteButton product={product} variant="detail" />
+      <FavoriteButton product={product} variant="detail" />
     </div>
   )
 }
