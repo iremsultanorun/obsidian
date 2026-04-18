@@ -5,6 +5,7 @@ export interface IProduct {
     description: string;
     category: string;
     images: string[];
+    brand:string;
 }
 
 export interface IProductDetail extends IProduct{
