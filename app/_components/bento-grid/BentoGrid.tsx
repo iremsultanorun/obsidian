@@ -5,7 +5,6 @@ import styles from './BentoGrid.module.css'
 export default function BentoGrid() {
   return (
     <div className={styles.gridWrap}>
-      {/* 1. ARCHIVE CARD */}
       <Link href="/collection" className={`${styles.cardLink} ${styles.linkLeft}`}>
         <div className={`${styles.card} ${styles.cardLeft}`}>
           <div className={styles.overlay} />
@@ -19,7 +18,6 @@ export default function BentoGrid() {
         </div>
       </Link>
 
-      {/* 2. BOUTIQUE EXCLUSIVE CARD */}
       <Link href="/boutique-exclusive" className={`${styles.cardLink} ${styles.linkTopRight}`}>
         <div className={`${styles.card} ${styles.cardTopRight}`}>
           <div className={styles.overlay} />
@@ -30,7 +28,6 @@ export default function BentoGrid() {
         </div>
       </Link>
 
-      {/* 3. BOTTOM RIGHT ROW (JOURNAL & DISPATCH) */}
       <div className={styles.bottomRightRow}>
         <Link href="/journal" className={styles.cardLink}>
           <div className={`${styles.card} ${styles.cardJournal}`}>
