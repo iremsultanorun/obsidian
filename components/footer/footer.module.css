@@ -24,14 +24,14 @@
     gap: 40px;
   }
   
-  .center a {
+  .footerLink {
     text-decoration: none;
     color: #888;
     font-size: 14px;
     transition: 0.2s ease;
   }
   
-  .center a:hover {
+ .footerLink:hover {
     color: #fff;
   }
   
