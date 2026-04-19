@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import styles from "./Hero.module.css";
+import styles from "./hero.module.css";
 
 export default function Hero() {
   return (

@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import styles from "./Footer.module.css";
+import styles from "./footer.module.css";
 
 export default function Footer() {
   return (
@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.right}>
-          © 2024 OBSIDIAN. ALL RIGHTS RESERVED.
+          © 2026 OBSIDIAN. ALL RIGHTS RESERVED.
         </div>
 
       </div>

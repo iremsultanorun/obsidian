@@ -1,7 +1,7 @@
 import { ShieldCheck, Truck, RotateCcw, Star } from "lucide-react";
 import styles from "./product.module.css";
 import { IProduct, IProductDetail } from "@/types/product";
-import Products from "@/components/products/Products";
+import Products from "@/components/products/products";
 import DetailGallery from "./_components/DetailGallery"
 import ProductDetailActions from "./_components/ProductDetailActions";
 

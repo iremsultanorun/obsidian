@@ -5,8 +5,8 @@ import "./globals.css";
 import FlyingAnimation from "@/components/animation/FlyingAnimaion";
 import ModalManager from "@/components/modals/ModalManager";
 import GlobalAlert from "@/components/ui/GlobalAlert";
-import Navbar from "@/components/navbar/Navbar";
-import Footer from "@/components/footer/Footer";
+import Footer from "@/components/footer/footer";
+import Navbar from "@/components/navbar/navbar";
 
 
 

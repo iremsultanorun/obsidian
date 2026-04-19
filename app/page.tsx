@@ -1,8 +1,9 @@
 import { IProduct } from "@/types/product";
 import styles from "./home.module.css";
 import BentoGrid from "@/app/_components/bento-grid/BentoGrid";
-import Hero from "./_components/hero/Hero";
-import Products from "@/components/products/Products";
+import Hero from "./_components/hero/hero";
+import Products from "@/components/products/products";
+
 
 
 export default async function Home() {

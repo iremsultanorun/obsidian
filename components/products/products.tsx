@@ -1,6 +1,6 @@
 import { IProduct } from "@/types/product";
 import ProductCard from "./product-card/ProductCard";
-import styles from "./Products.module.css";
+import styles from "./products.module.css";
 
 interface ProductsProps {
   products: IProduct[];
