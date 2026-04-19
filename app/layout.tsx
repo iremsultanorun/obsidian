@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Manrope} from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar/Navbar";
-import Footer from "@/components/footer/Footer";
+
 import FlyingAnimation from "@/components/animation/FlyingAnimaion";
 import ModalManager from "@/components/modals/ModalManager";
 import GlobalAlert from "@/components/ui/GlobalAlert";
+import Navbar from "@/components/navbar/Navbar";
+import Footer from "@/components/footer/Footer";
 
 
 
