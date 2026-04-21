@@ -28,7 +28,6 @@
 .animatedImageContainer {
   position: absolute;
   inset: 0;
-  /* width/height yerine inset kullanımı daha performanslıdır */
   padding: var(--space-lg);
   display: flex;
   align-items: center;
@@ -116,7 +115,8 @@
 
 @media (max-width: 768px) {
   .mainImageWrapper {
-    max-width: 420px;
+    max-width: 100%;
+    min-width: 60%;
     margin: 0 auto;
     padding: var(--space-md);
   }
@@ -134,8 +134,11 @@
     overflow-x: auto;
     gap: var(--space-xs);
     padding-bottom: var(--space-xs);
-    /* Kaydırma çubuğunu gizle */
     scrollbar-width: none;
+  }
+  .mainImageWrapper {
+    max-width: 100%;
+    min-width: 100%;
   }
 
   .thumbnailGrid::-webkit-scrollbar {
