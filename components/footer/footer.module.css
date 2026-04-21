@@ -4,6 +4,7 @@
     color: #aaa;
     padding: 32px 40px;
     border-radius: 20px;
+      min-height: 200px;
   }
   
   .container {
