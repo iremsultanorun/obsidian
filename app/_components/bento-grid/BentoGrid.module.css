@@ -17,7 +17,7 @@
   height: 100%;
 }
 
-.cardLink > div {
+.cardLink>div {
   width: 100%;
   flex: 1;
 }
@@ -55,17 +55,17 @@
 
 .cardLeft {
   min-height: 600px;
-  background: url('/bentoGrid/archive.png') center/cover no-repeat;
+  background: url('/bentoGrid/archive.webp') center/cover no-repeat;
 }
 
 .cardTopRight {
   min-height: 250px;
-  background: url('/bentoGrid/boutique.png') center/cover no-repeat;
+  background: url('/bentoGrid/boutique.webp') center/cover no-repeat;
 }
 
 .cardJournal {
   min-height: 220px;
-  background: url('/bentoGrid/metarial.png') center/cover no-repeat;
+  background: url('/bentoGrid/metarial.webp') center/cover no-repeat;
 }
 
 .cardDispatch {
@@ -142,6 +142,7 @@
 .cardContentCenter {
   text-align: center;
 }
+
 @media (max-width: 1024px) {
   .overlay {
     background: rgba(0, 0, 0, 0.2);

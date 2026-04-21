@@ -1,13 +1,12 @@
 "use client"
 
-import { useBasketStore } from "@/store/useBasketStore"
+import { useUIStore } from "@/store/useUIStore"
 import { useEffect } from "react"
 
 
 export default function ScrollLock() {
-  const { activeModal } = useBasketStore()
+  const { activeModal } = useUIStore()
   useEffect(() => {
-      console.log("activeModal değişti:", activeModal)
     if (activeModal !== null) {
       document.body.style.overflow = "hidden"
     } else {

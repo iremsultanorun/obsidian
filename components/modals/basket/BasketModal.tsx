@@ -7,9 +7,11 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./BasketModal.module.css";
 import BasketQuantityControl from "@/app/basket/_components/BasketQuantityControl";
+import { useUIStore } from "@/store/useUIStore";
 
 export default function BasketModal() {
-  const { items, activeModal, setActiveModal} = useBasketStore();
+  const { items} = useBasketStore();
+  const { activeModal,setActiveModal} = useUIStore();
   
   const isOpen = activeModal === "basket";
   const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);

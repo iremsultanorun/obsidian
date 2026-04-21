@@ -29,7 +29,10 @@ export default function BasketQuantityControl({ item }: Props) {
       <button 
       type="button"
         className={styles.qtyBtn} 
-        onClick={() => addToBasket(item)}
+        onClick={(e) => {
+          e.stopPropagation()
+          addToBasket(item)
+        }}
         aria-label={`Increase quantity of ${item.title}`}
       >
         <Plus size={14} />

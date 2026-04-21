@@ -6,19 +6,14 @@ import { useNotificationStore } from "./useNotificationStore";
 export interface ICartItem extends IProduct {
     quantity: number;
 }
-type ModalType = 'basket' | 'search' | 'menu' | null;
 interface BasketState {
     items: ICartItem[];
-    activeModal: ModalType;
     flyingImage: { src: string; startPos: { x: number; y: number } } | null;
     mainImagePos: { left: number; top: number; width: number; height: number } | null;
     addToBasket: (product: IProduct) => void;
     decreaseQuantity: (productId: number) => void;
     removeFromBasket: (productId: number) => void;
     setFlyingImage: (data: { src: string; startPos: { x: number; y: number } } | null) => void;
-    setActiveModal: (modal: ModalType) => void;
-    toggleModal: (modal: ModalType) => void;
-    closeAllModals: () => void;
     setMainImagePos: (pos: { left: number; top: number; width: number; height: number } | null) => void;
 }
 
@@ -29,20 +24,15 @@ export const useBasketStore = create<BasketState>()(
             flyingImage: null,
             activeModal: null,
             mainImagePos: null,
-            setActiveModal: (modal) => set({ activeModal: modal }),
-            closeAllModals: () => set({ activeModal: null }),
-            toggleModal: (modal) => set((state) => ({ 
-                activeModal: state.activeModal === modal ? null : modal 
-            })),
+           
             addToBasket: (product) =>
                 set((state) => {
                     const existingItem = state.items.find((item) => item.id === product.id);
 
                     if (existingItem) {
                         if (existingItem.quantity >= 10) {
-                            state.flyingImage=null
-                            useNotificationStore.getState().showNotification("Maksimum 10 adet ekleyebilirsiniz.", "error");
-                            return state
+                            useNotificationStore.getState().showNotification("You can add a maximum of 10 items.", "error");
+                            return { flyingImage: null }; 
                         }
                         return {
                             items: state.items.map((item) =>
@@ -52,6 +42,8 @@ export const useBasketStore = create<BasketState>()(
                             ),
                         };
                     }
+              
+                  
                     return { items: [...state.items, { ...product, quantity: 1 }] };
                 }),
             decreaseQuantity: (productId) => set((state) => ({

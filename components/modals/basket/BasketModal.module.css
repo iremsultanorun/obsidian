@@ -122,12 +122,6 @@
   transform: scale(0.98);
 }
 
-/* NEW */
-.emptyState {
-  color: var(--color-gray-300);
-  text-align: center;
-  margin-top: var(--space-lg);
-}
 
 .checkoutLink {
   text-decoration: none;

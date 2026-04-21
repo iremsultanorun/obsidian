@@ -44,7 +44,6 @@ interface ProductCardProps {
 
   const detailsZ = (!isMobile && isHovered && !isClicked) ? 50 : 2;
 
-  // useMemo kullanımı düzeltildi: değişken olarak döner
   const getSceneTransform = useMemo(() => {
     if (isMobile) return "none";
     if (isClicked) return "translateY(-100px) rotateX(310deg) translateZ(150px)";

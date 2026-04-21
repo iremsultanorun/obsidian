@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { Heart, Search, ShoppingBag } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import styles from "./navbar.module.css"; 
+import styles from "./navbar.module.css";
 import { usePathname } from "next/navigation";
 import { useBasketStore } from "@/store/useBasketStore";
+import { useUIStore } from "@/store/useUIStore";
 
 interface NavLink {
   name: string,
@@ -22,8 +23,8 @@ const navLinks: NavLink[] = [
 export default function Navbar() {
 
   const path = usePathname()
-
-  const { items, setActiveModal,activeModal,toggleModal } = useBasketStore();
+  const { items } = useBasketStore()
+  const { setActiveModal, activeModal, toggleModal } = useUIStore();
   const cartCount = items.length;
   return (
     <nav className={styles.navbarContainer} aria-label="Main navigation">
@@ -37,14 +38,14 @@ export default function Navbar() {
             key={link.name}
             className={styles.navItem}
           >
-            <Link href={link.href} className={`${styles.navLink} ${path === link.href ? styles.activeLink : ""}`} aria-current={path===link.href?"page":undefined}>
-            
-                 {link.name.split("").map((char, index) => (
-                  <span key={index} className={styles.animLetter}>
-                    {char}
-                  </span>
-                ))}
-           
+            <Link href={link.href} className={`${styles.navLink} ${path === link.href ? styles.activeLink : ""}`} aria-current={path === link.href ? "page" : undefined}>
+
+              {link.name.split("").map((char, index) => (
+                <span key={index} className={styles.animLetter}>
+                  {char}
+                </span>
+              ))}
+
             </Link>
           </li>
         ))}
@@ -55,10 +56,10 @@ export default function Navbar() {
           aria-label="Open search">
           <Search size={22} strokeWidth={1.5} />
         </button>
-   
-       <Link href="/favorite"className={styles.iconButton} aria-label="View favorites">
+
+        <Link href="/favorite" className={styles.iconButton} aria-label="View favorites">
           <Heart size={22} strokeWidth={1.5} />
-       </Link>
+        </Link>
         <button
           className={`${styles.iconButton} ${styles.cartButton}`}
           aria-label="View shopping bag"
@@ -66,25 +67,25 @@ export default function Navbar() {
         >
           <ShoppingBag id="basket-icon" size={22} strokeWidth={1.5} />
           <span className={styles.cartBadge}>
-        
-          <span className={styles.badge}>{cartCount}</span>
-     
-            </span>
+
+            <span className={styles.badge}>{cartCount}</span>
+
+          </span>
         </button>
         <button
           className={styles.menuButton}
           onClick={() => toggleModal("menu")}
           aria-label="Toggle menu"
-          aria-expanded={activeModal==="menu"}
+          aria-expanded={activeModal === "menu"}
         >
-          <div className={`${styles.hamburger} ${activeModal==="menu" ? styles.open : ""}`}>
+          <div className={`${styles.hamburger} ${activeModal === "menu" ? styles.open : ""}`}>
             <span></span>
             <span></span>
           </div>
         </button>
       </div>
       <AnimatePresence>
-        {activeModal==="menu" && (
+        {activeModal === "menu" && (
           <motion.div
             initial={{ clipPath: "circle(0% at 0% 100%)", opacity: 0 }}
             animate={{ clipPath: "circle(150% at 0% 100%)", opacity: 1 }}
@@ -100,7 +101,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + i * 0.1 }}
                 >
-                  <Link href={link.href} onClick={() =>setActiveModal(null)}>
+                  <Link href={link.href} onClick={() => setActiveModal(null)}>
                     {link.name}
                   </Link>
                 </motion.li>

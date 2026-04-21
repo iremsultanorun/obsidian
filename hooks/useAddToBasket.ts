@@ -12,7 +12,7 @@ export const useAddToBasket = () => {
   ) => {
     const existingItem = items.find(item => item.id === product.id);
     if (existingItem && existingItem.quantity >= 10) {
-
+e.stopPropagation()
       addToBasket(product); 
       return; 
     }
@@ -33,7 +33,7 @@ export const useAddToBasket = () => {
         y: rect.top + rect.height / 2,
       },
     });
-
+e.stopPropagation()
     addToBasket(product);
   };
 

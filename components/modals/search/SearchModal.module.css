@@ -13,13 +13,19 @@
 }
 
 .searchHeader {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 2fr .5fr;
   border-bottom: var(--border-subtle);
   padding-bottom: var(--space-lg);
   gap: var(--space-lg);
 }
-
+.searchContainer{
+  display: grid;
+  grid-template-columns: .5fr 2fr; 
+  align-items: center;
+  gap: var(--space-sm);
+}
 .searchIcon {
   color: var(--color-gray-300);
 }
@@ -162,8 +168,6 @@
   }
 
 .searchHeader {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
   padding-bottom: var(--space-sm);
   gap: var(--space-sm);
 }

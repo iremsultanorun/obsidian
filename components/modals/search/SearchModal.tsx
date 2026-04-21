@@ -5,10 +5,10 @@ import { Search, X } from "lucide-react";
 import styles from "./SearchModal.module.css";
 import ProductCard from "@/components/products/product-card/ProductCard";
 import { IProduct } from "@/types/product";
-import { useBasketStore } from "@/store/useBasketStore";
+import { useUIStore } from "@/store/useUIStore";
 
 export default function SearchModal() {
-  const { setActiveModal } = useBasketStore();
+  const { setActiveModal } = useUIStore();
   
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
@@ -42,7 +42,8 @@ export default function SearchModal() {
     >
       <div className={styles.modalContent}>
         <div className={styles.searchHeader}>
-          <Search className={styles.searchIcon} size={24} strokeWidth={1.5} />
+         <div className={styles.searchContainer}>
+         <Search className={styles.searchIcon} size={24} strokeWidth={1.5} />
           <input
             autoFocus
             type="text"
@@ -51,6 +52,7 @@ export default function SearchModal() {
             onChange={(e) => setQuery(e.target.value)}
             className={styles.searchInput}
           />
+         </div>
           <button onClick={handleClose} className={styles.closeBtn}>
             <X className={styles.closeIcon} size={28} strokeWidth={1.2} />
           </button>
