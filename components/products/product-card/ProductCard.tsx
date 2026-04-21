@@ -1,26 +1,34 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useMemo,memo } from "react";
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { IProduct } from "@/types/product";
 import styles from "./ProductCard.module.css";
-import {  ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useAddToBasket } from "@/hooks/useAddToBasket";
 import FavoriteButton from "@/components/common/FavoriteButton/FavoriteButton";
 
 interface ProductCardProps {
   product: IProduct;
-
+  priority?: boolean;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+ function ProductCard({ product, priority = false }: ProductCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const addToBasket = useAddToBasket();
   const x = useMotionValue(0);
@@ -34,29 +42,25 @@ export default function ProductCard({ product }: ProductCardProps) {
   const tiltX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
   const tiltY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
 
-  const detailsZ = (isHovered && !isClicked) ? 50 : 2;
+  const detailsZ = (!isMobile && isHovered && !isClicked) ? 50 : 2;
 
-  const getSceneTransform = () => {
+  // useMemo kullanımı düzeltildi: değişken olarak döner
+  const getSceneTransform = useMemo(() => {
+    if (isMobile) return "none";
     if (isClicked) return "translateY(-100px) rotateX(310deg) translateZ(150px)";
-    if (isHovered && !isClicked) return "translateZ(10px)";
-    return "translateY(0px) rotateX(0deg) translateZ(0px)";
-  };
-  const nextImg = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImgIndex((prev) => (prev + 1) % Math.min(product.images.length, 4));
-  };
+    if (isHovered) return "translateZ(10px)";
+    return "translateZ(0px)";
+  }, [isMobile, isClicked, isHovered]);
 
-  const prevImg = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImgIndex((prev) => (prev - 1 + Math.min(product.images.length, 4)) % Math.min(product.images.length, 4));
-  };
+  const goNext = () => setCurrentImgIndex((prev) => (prev + 1) % Math.min(product.images.length, 4));
+  const goPrev = () => setCurrentImgIndex((prev) => (prev - 1 + Math.min(product.images.length, 4)) % Math.min(product.images.length, 4));
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 1024 || !cardRef.current) return;
+    if (isMobile || !cardRef.current || isClicked) return;
     const rect = cardRef.current.getBoundingClientRect();
     x.set((e.clientX - rect.left) / rect.width - 0.5);
     y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
-
 
   return (
     <div
@@ -64,73 +68,75 @@ export default function ProductCard({ product }: ProductCardProps) {
       className={`${styles.cardContainer} ${isClicked ? styles.cardClicked : ""}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { x.set(0); y.set(0); setIsHovered(false); }}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => !isMobile && setIsHovered(true)}
     >
       <motion.div
         className={styles.card}
         style={{
-          rotateX: isClicked ? 55 : tiltX,
-          rotateY: isClicked ? 0 : tiltY,
+          rotateX: isMobile ? 0 : (isClicked ? 55 : tiltX),
+          rotateY: isMobile ? 0 : (isClicked ? 0 : tiltY),
+          transformStyle: isMobile ? "flat" : "preserve-3d"
         }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        transition={isHovered || isClicked ? { type: "spring", stiffness: 100, damping: 20 } : { duration: 0 }}
       >
-        <AnimatePresence>
-          {isHovered && !isClicked && (
-            <motion.div
-              onClick={(e) => {
-                e.stopPropagation();
-                if (window.innerWidth < 1024) return;
-                setIsClicked(true);
-              }}
-              className={styles.clickHint}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              whileHover={{ scale: 1.1 }}
-              style={{ translateZ: 60 }}
-            />
-          )}
-        </AnimatePresence>
+        {!isMobile && (
+          <AnimatePresence>
+            {isHovered && !isClicked && (
+              <motion.div
+                className={styles.clickHint}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                style={{ translateZ: 60 }} 
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  setIsClicked(true);
+                }}
+                >
+      
+                  </motion.div>
+            )}
+          </AnimatePresence>
+        )}
 
         <motion.div
           ref={galleryRef}
           className={styles.cubeScene}
-          animate={{ transform: getSceneTransform() }}
-          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          animate={{ transform: getSceneTransform }} 
+          initial={false}
         >
           {!isClicked ? (
-            <div className={styles.standardSlider}>
-              <AnimatePresence mode="wait">
+            <motion.div className={styles.standardSlider}>
+              <AnimatePresence mode="popLayout">
                 <motion.div
                   key={currentImgIndex}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   className={styles.standardSlide}
                 >
                   <Image
                     src={product.images[currentImgIndex]}
                     alt={product.title}
                     fill
-                    sizes="200px"
+                    sizes="(max-width: 1024px) 100vw, 300px"
                     className={styles.cubeImage}
+                    priority={priority || currentImgIndex === 0}
                   />
                 </motion.div>
               </AnimatePresence>
-              {product.images.length > 1 && (
+              
+              {!isMobile && product.images.length > 1 && (
                 <div className={styles.arrowContainer}>
-                  <button className={styles.arrowBtn} onClick={prevImg}><ChevronLeft size={20} /></button>
-                  <button className={styles.arrowBtn} onClick={nextImg}><ChevronRight size={20} /></button>
+                  <button className={styles.arrowBtn} onClick={(e) => { e.stopPropagation(); goPrev(); }}><ChevronLeft size={18} /></button>
+                  <button className={styles.arrowBtn} onClick={(e) => { e.stopPropagation(); goNext(); }}><ChevronRight size={18} /></button>
                 </div>
               )}
-            </div>
+            </motion.div>
           ) : (
             <motion.div
               className={styles.cube}
-              style={{
-                rotateY: cubeRotation,
-                transformStyle: "preserve-3d",
-              }}
+              style={{ rotateY: cubeRotation, transformStyle: "preserve-3d" }}
             >
               {[0, 90, 180, 270].map((angle, index) => (
                 <div
@@ -142,7 +148,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                     src={product.images[index % product.images.length]}
                     alt="face"
                     fill
-                    sizes="200px"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className={styles.cubeImage}
                   />
                 </div>
@@ -153,12 +159,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           <AnimatePresence>
             {isClicked && (
               <motion.button
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-                onClick={() => setIsClicked(false)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsClicked(false);
+                }}
                 className={styles.exitBtn}
-                style={{ translateZ: 150 }}
+                style={{ translateZ: 200 }}
               >
                 <X size={16} />
               </motion.button>
@@ -179,43 +187,26 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        <motion.div
-          className={styles.details}
-          style={{ translateZ: detailsZ }}
-          transition={{ type: "spring", stiffness: 120, damping: 20 }}
-        >
+        <motion.div className={styles.details} style={{ translateZ: detailsZ }}>
           <div className={styles.productInfo}>
             <span className={styles.category}>{product.category}</span>
             <h3 className={styles.title}>{product.title}</h3>
+            <p className={styles.description}>{product.description}</p>
             <span className={styles.price}>{product.price}€</span>
           </div>
 
           <div className={styles.actionGroup}>
-            <Link href={`/product/${product.id}`} className={styles.detailBtn}>
-              DETAILS
-            </Link>
+            <Link href={`/product/${product.id}`} className={styles.detailBtn}>DETAILS</Link>
             <div className={styles.iconActions}>
               <FavoriteButton product={product} variant="card" />
-
-              <button
-                className={styles.iconBtn}
-                aria-label="Add to cart"
-                onClick={(e) => addToBasket(e, product, undefined, galleryRef)}
-              >
+              <button className={styles.iconBtn} onClick={(e) => addToBasket(e, product, undefined, galleryRef)}>
                 <ShoppingCart size={18} />
               </button>
             </div>
-
-
           </div>
         </motion.div>
       </motion.div>
-
-      {!isClicked && (
-        <div className={styles.glassLayer}>
-          <motion.div className={styles.lightReflex} />
-        </div>
-      )}
     </div>
   );
 }
+export default memo(ProductCard)

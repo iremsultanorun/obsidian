@@ -58,6 +58,7 @@ export default function FlyingAnimation() {
               src={flyingImage.src}
               alt="flying"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
               priority
             />

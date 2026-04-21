@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import styles from "./SearchModal.module.css";
@@ -11,7 +11,6 @@ export default function SearchModal() {
   const { setActiveModal } = useBasketStore();
   
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<IProduct[]>([]);
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
@@ -21,17 +20,13 @@ export default function SearchModal() {
         setAllProducts(data.products);
       })
   }, []);
-
-  useEffect(() => {
-    if (query.trim() === "") {
-      setResults([]);
-      return;
-    }
-    const filtered = allProducts.filter((p) =>
+  const results = useMemo(() => {
+    if (query.trim() === "") return [];
+  
+    return allProducts.filter((p) =>
       p.title.toLowerCase().includes(query.toLowerCase()) ||
       p.category.toLowerCase().includes(query.toLowerCase())
     );
-    setResults(filtered);
   }, [query, allProducts]);
 
   const handleClose = () => {
@@ -57,7 +52,7 @@ export default function SearchModal() {
             className={styles.searchInput}
           />
           <button onClick={handleClose} className={styles.closeBtn}>
-            <X size={28} strokeWidth={1.2} />
+            <X className={styles.closeIcon} size={28} strokeWidth={1.2} />
           </button>
         </div>
 
@@ -93,7 +88,9 @@ export default function SearchModal() {
                   ))}
                 </div>
               ) : (
-                <p className={styles.noResult}>No products found for "{query}"</p>
+                <p className={styles.noResult}>{
+                  `No products found for ${query}`
+                }</p>
               )}
             </div>
           )}

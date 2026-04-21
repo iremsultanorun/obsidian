@@ -35,26 +35,30 @@ export default function ProductGallery({ images, title }: Props) {
   const galleryRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const updatePos = () => {
-      if (galleryRef.current) {
-        const rect = galleryRef.current.getBoundingClientRect();
-        setMainImagePos({
-          left: rect.left,
-          top: rect.top,
-          width: rect.width,
-          height: rect.height
-        });
-      }
+
+      requestAnimationFrame(() => {
+        if (galleryRef.current) {
+          const rect = galleryRef.current.getBoundingClientRect();
+
+          setMainImagePos({
+            left: rect.left,
+            top: rect.top,
+            width: rect.width,
+            height: rect.height
+          });
+        }
+      });
     };
   
-    updatePos(); 
-    window.addEventListener('scroll', updatePos);
-    window.addEventListener('resize', updatePos);
+    updatePos();
   
+    window.addEventListener('resize', updatePos);
+    
     return () => {
-      window.removeEventListener('scroll', updatePos);
       window.removeEventListener('resize', updatePos);
     };
-  }, [selectedImg, setMainImagePos]);
+
+  }, [selectedImg]);
   const paginate = (newDirection: number) => {
     let nextIndex = selectedImg + newDirection;
     if (nextIndex < 0) nextIndex = images.length - 1;
@@ -94,9 +98,8 @@ export default function ProductGallery({ images, title }: Props) {
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.8}
-              onDragEnd={(e, { offset, velocity }) => {
-                const swipe = Math.abs(offset.x) * velocity.x;
-
+              onDragEnd={(_, info) => {
+                const swipe = Math.abs(info.offset.x) * info.velocity.x;
                 if (swipe < -5000) paginate(1);
                 else if (swipe > 5000) paginate(-1);
               }}
@@ -107,6 +110,7 @@ export default function ProductGallery({ images, title }: Props) {
                 src={images[selectedImg]}
                 alt={title}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className={styles.mainImage}
                 priority
               />

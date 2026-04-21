@@ -1,21 +1,22 @@
 .visualSection {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-md);
   width: 100%;
 }
 
 .mainImageWrapper {
   position: relative;
   aspect-ratio: 1/1;
-  background: #151515;
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--color-dark);
+  border-radius: var(--radius-lg);
+  border: var(--card-border);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px;
+  padding: var(--space-lg);
+  will-change: transform;
 }
 
 .sliderContainer {
@@ -26,9 +27,9 @@
 
 .animatedImageContainer {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 40px;
+  inset: 0;
+  /* width/height yerine inset kullanımı daha performanslıdır */
+  padding: var(--space-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,17 +38,8 @@
 .mainImage {
   object-fit: contain;
   user-select: none;
+  aspect-ratio: 1/1;
   pointer-events: none;
-}
-
-.controls {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 10;
 }
 
 .navBtn {
@@ -56,18 +48,20 @@
   transform: translateY(-50%);
   width: 44px;
   height: 44px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  color: var(--color-white);
+  border: var(--border-subtle);
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   pointer-events: auto;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal);
   opacity: 0;
+  z-index: 10;
 }
 
 .mainImageWrapper:hover .navBtn {
@@ -75,43 +69,44 @@
 }
 
 .navBtn:hover {
-  background: #fff;
-  color: #000;
+  background: var(--color-white);
+  color: var(--color-dark);
 }
 
 .prev {
-  left: 15px;
+  left: var(--space-sm);
 }
 
 .next {
-  right: 15px;
+  right: var(--space-sm);
 }
 
 .thumbnailGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
+  gap: var(--space-sm);
 }
 
 .thumb {
   position: relative;
   aspect-ratio: 1/1;
-  background: #151515;
-  border-radius: 12px;
+  background: var(--color-dark);
+  border-radius: var(--radius-md);
   border: 2px solid transparent;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
 }
 
 .activeThumb {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-white);
+  background: var(--card-bg-subtle);
 }
+
 
 @media (max-width: 1024px) {
   .animatedImageContainer {
-    padding: 30px;
+    padding: var(--space-md);
   }
 
   .navBtn {
@@ -120,58 +115,35 @@
 }
 
 @media (max-width: 768px) {
+  .mainImageWrapper {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: var(--space-md);
+  }
 
   .navBtn {
     opacity: 1;
     width: 36px;
     height: 36px;
   }
-
-  .animatedImageContainer {
-    padding: 20px;
-  }
-
-  .thumbnailGrid {
-    gap: 10px;
-  }
-
-  .visualSection {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .mainImageWrapper {
-    max-width: 420px;
-    width: 100%;
-    margin: 0 auto;
-  }
 }
 
 @media (max-width: 480px) {
-  .animatedImageContainer {
-    padding: 10px;
-  }
-
-  .thumbnailGrid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-
-  .prev {
-    left: 8px;
-  }
-
-  .next {
-    right: 8px;
-  }
-
   .thumbnailGrid {
     display: flex;
     overflow-x: auto;
-    gap: 8px;
+    gap: var(--space-xs);
+    padding-bottom: var(--space-xs);
+    /* Kaydırma çubuğunu gizle */
+    scrollbar-width: none;
+  }
+
+  .thumbnailGrid::-webkit-scrollbar {
+    display: none;
   }
 
   .thumb {
-    min-width: 70px;
+    min-width: 75px;
+    border-radius: var(--radius-sm);
   }
 }

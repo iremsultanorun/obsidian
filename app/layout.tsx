@@ -7,7 +7,7 @@ import ModalManager from "@/components/modals/ModalManager";
 import GlobalAlert from "@/components/ui/GlobalAlert";
 import Footer from "@/components/footer/footer";
 import Navbar from "@/components/navbar/navbar";
-
+import ScrollLock from "@/components/scroll-lock/scroll-lock";
 
 
 const manrope = Manrope({
@@ -25,9 +25,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" className={`${manrope.variable}`}>
       <body suppressHydrationWarning>
+        <ScrollLock/>
       <GlobalAlert />
       <Navbar/>
      <main>

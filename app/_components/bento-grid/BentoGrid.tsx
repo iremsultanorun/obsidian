@@ -5,7 +5,7 @@ import styles from './BentoGrid.module.css'
 export default function BentoGrid() {
   return (
     <div className={styles.gridWrap}>
-      <Link href="/collection" className={`${styles.cardLink} ${styles.linkLeft}`}>
+      <Link href="/collection" className={`${styles.cardLink} ${styles.linkLeft}`} aria-label="View Archive Collection">
         <div className={`${styles.card} ${styles.cardLeft}`}>
           <div className={styles.overlay} />
           <div className={styles.cardContent}>
@@ -18,7 +18,7 @@ export default function BentoGrid() {
         </div>
       </Link>
 
-      <Link href="/boutique-exclusive" className={`${styles.cardLink} ${styles.linkTopRight}`}>
+      <Link href="/boutique-exclusive" className={`${styles.cardLink} ${styles.linkTopRight}`} aria-label="View Boutique Exclusive">
         <div className={`${styles.card} ${styles.cardTopRight}`}>
           <div className={styles.overlay} />
           <span className={styles.arrowIcon}>↗</span>
@@ -30,7 +30,7 @@ export default function BentoGrid() {
 
       <div className={styles.bottomRightRow}>
         <Link href="/journal" className={styles.cardLink}>
-          <div className={`${styles.card} ${styles.cardJournal}`}>
+          <div className={`${styles.card} ${styles.cardJournal}`} aria-label="Read Journal">
             <div className={styles.overlay} />
             <div className={styles.cardContent}>
               <p className={styles.journalLabel}>Journal</p>
@@ -39,7 +39,7 @@ export default function BentoGrid() {
           </div>
         </Link>
 
-        <Link href="/dispatch" className={styles.cardLink}>
+        <Link href="/dispatch" className={styles.cardLink} aria-label="View Dispatch Information">
           <div className={styles.cardDispatch}>
             <svg className={styles.truckIcon} viewBox="0 0 36 26" fill="none">
               <rect x="0" y="4" width="22" height="14" rx="2" fill="rgba(255,255,255,0.85)" />

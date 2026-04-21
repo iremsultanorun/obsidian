@@ -1,42 +1,51 @@
 .quantitySelector {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 4px 8px;
-    gap: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .qtyBtn {
-    background: transparent;
-    border: none;
-    color: #888;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    transition: all 0.2s ease;
-  }
-  
-  .qtyBtn:hover {
-    color: #fff;
-  }
-  
-  .quantityText {
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-    min-width: 20px;
-    text-align: center;
-  }
-  
-  .removeBtn {
-    margin-left: 4px;
-    color: rgba(255, 255, 255, 0.3);
-  }
-  
-  .removeBtn:hover {
-    color: #ff4d4d; 
-  }
+  display: flex;
+  align-items: center;
+  background: var(--card-bg-subtle);
+  border-radius: var(--radius-full);
+  padding: var(--space-xxs) var(--space-xs);
+  gap: var(--space-xs);
+  border: var(--border-subtle);
+}
+
+.qtyBtn {
+  background: transparent;
+  border: none;
+  color: var(--color-gray-300);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xxs);
+  transition: var(--transition-fast);
+  border-radius: var(--radius-sm);
+}
+
+.qtyBtn:hover {
+  color: var(--color-white);
+}
+
+.qtyBtn:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+.qtyBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.quantityText {
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--fw-bold);
+  min-width: 20px;
+  text-align: center;
+}
+
+.removeBtn {
+  margin-left: var(--space-xxs);
+  color: var(--color-white-60);
+}
+
+.removeBtn:hover {
+  color: var(--color-danger); 
+}

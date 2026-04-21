@@ -43,12 +43,14 @@ export default function BasketModal() {
 
             <div className={styles.content}>
               {items.length === 0 ? (
-                <div style={{color: "#888", textAlign: 'center', marginTop: '40px'}}>Your basket is empty.</div>
+                <div className={styles.emptyState}>Your basket is empty.</div>
               ) : (
                 items.map((item) => (
                   <div key={item.id} className={styles.cartItem}>
                     <div className={styles.itemImage}>
-                      <Image src={item.images[0]} alt={item.title} fill objectFit="cover" />
+                      <Image src={item.images[0]} alt={item.title} fill 
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      objectFit="cover" />
                     </div>
                     <div className={styles.itemDetails}>
                       <h4>{item.title}</h4>
@@ -71,7 +73,7 @@ export default function BasketModal() {
                   <span>Total:</span>
                   <span>${totalPrice.toFixed(2)}</span>
                 </div>
-    <Link href="/basket" style={{ textDecoration: 'none' }}>
+                <Link href="/basket" className={styles.checkoutLink}>
       <button 
         className={styles.checkoutBtn} 
         onClick={() => setActiveModal(null)} 
@@ -79,7 +81,7 @@ export default function BasketModal() {
         CHECKOUT NOW
       </button>
     </Link>
-                <div style={{display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '15px', fontSize: '10px', color: '#555', letterSpacing: '1px'}}>
+                <div  className={styles.footerLinks}>
                    <span>SHIPPING</span>
                    <span>TAX POLICY</span>
                    <span>HELP</span>

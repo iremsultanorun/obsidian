@@ -22,11 +22,11 @@ export default function BasketPage() {
       </header>
 
       <div className={styles.cartContent}>
-        <div className={styles.itemList}>
+        <ul className={styles.itemList}>
           {items.map((item) => (
-            <div key={item.id} className={styles.cartCard}>
+            <li key={item.id} className={styles.cartCard}>
               <div className={styles.imageWrapper}>
-                <Image src={item.images[0]} alt={item.title} fill className={styles.productImg} />
+                <Image src={item.images[0]} alt={item.title} fill sizes="(max-width: 768px) 100vw, 50vw" className={styles.productImg} />
               </div>
 
               <div className={styles.productInfo}>
@@ -37,20 +37,22 @@ export default function BasketPage() {
              
 
               <div className={styles.cardActions}>
-              <Link href={`/product/${item.id}`} className={styles.viewDetailBtn}>
+              <Link href={`/product/${item.id}`} className={styles.viewDetailBtn}
+              aria-label={`View details of ${item.title}`}
+              >
                 VIEW DETAILS
               </Link>
                 <BasketQuantityControl item={item} />
                 <span className={styles.itemPrice}>${(item.price * item.quantity).toLocaleString()}</span>
               </div>
-            </div>
+            </li>
           ))}
 
           <div className={styles.continueCard}>
             <p>Curate your collection further</p>
             <Link href="/#products-section" className={styles.continueBtn}>CONTINUE BROWSING</Link>
           </div>
-        </div>
+        </ul>
 
         <aside className={styles.summarySidebar}>
           <div className={styles.summaryCard}>
@@ -72,10 +74,10 @@ export default function BasketPage() {
 
             <div className={styles.totalRow}>
               <span>Total</span>
-              <span className={styles.totalAmount}>${total.toLocaleString()}</span>
+              <span aria-live="polite" className={styles.totalAmount}>${total.toLocaleString()}</span>
             </div>
 
-            <button className={styles.checkoutBtn}>PROCEED TO CHECKOUT</button>
+            <button   aria-label={`Proceed to checkout. Total amount ${total.toFixed(2)} dollars`} className={styles.checkoutBtn}>PROCEED TO CHECKOUT</button>
             <p className={styles.secureText}>SECURE ENCRYPTED CHECKOUT POWERED BY OBSIDIAN</p>
           </div>
         </aside>

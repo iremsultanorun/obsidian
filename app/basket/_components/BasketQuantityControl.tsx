@@ -15,9 +15,11 @@ export default function BasketQuantityControl({ item }: Props) {
   return (
     <div className={styles.quantitySelector}>
       <button 
+      type="button"
         className={styles.qtyBtn} 
+        disabled={item.quantity <= 1}
         onClick={() => decreaseQuantity(item.id)}
-        aria-label="Decrease quantity"
+        aria-label={`Decrease quantity of ${item.title}`}
       >
         <Minus size={14} />
       </button>
@@ -25,17 +27,19 @@ export default function BasketQuantityControl({ item }: Props) {
       <span className={styles.quantityText}>{item.quantity}</span>
       
       <button 
+      type="button"
         className={styles.qtyBtn} 
         onClick={() => addToBasket(item)}
-        aria-label="Increase quantity"
+        aria-label={`Increase quantity of ${item.title}`}
       >
         <Plus size={14} />
       </button>
       
       <button 
+      type="button"
         className={`${styles.qtyBtn} ${styles.removeBtn}`} 
         onClick={() => removeFromBasket(item.id)}
-        aria-label="Remove item"
+        aria-label={`Remove ${item.title} from basket`}
       >
         <Trash2 size={14} />
       </button>

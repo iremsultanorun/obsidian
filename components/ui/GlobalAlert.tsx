@@ -23,6 +23,9 @@ export default function GlobalAlert() {
           exit={{ opacity: 0, y: -20, x: "-50%" }}
           className={styles.alertContainer}
           onClick={hideNotification}
+          role="alert"
+          aria-live="polite"
+          aria-atomic="true"
         >
           {icons[type]}
           
@@ -30,7 +33,7 @@ export default function GlobalAlert() {
             {message}
           </span>
           
-          <X size={14} className={styles.closeIcon} />
+          <X size={14} className={styles.closeIcon} aria-hidden="true" />
         </motion.div>
       )}
     </AnimatePresence>

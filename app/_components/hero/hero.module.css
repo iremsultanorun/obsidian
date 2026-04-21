@@ -5,19 +5,19 @@
   display: flex;
   align-items: center;
   background-color: var(--background);
-  margin-top: -30px;
+  margin-top: calc(var(--space-md) * -1);
 }
 
 .circleContainer {
   position: absolute;
-  top: -30%; 
+  top: -30%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
   height: 120%;
   display: flex;
   justify-content: center;
-  z-index: 1; 
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -26,18 +26,18 @@
   height: 100vw;
   max-width: 1200px;
   max-height: 1200px;
-  background: radial-gradient(circle at center, #1b1b1b 0%, transparent 100%);
+  background: radial-gradient(circle at center, var(--color-gray-400) 0%, transparent 100%);
   border-radius: 50%;
   opacity: 0.9;
-  filter: blur(50px); 
+  filter: blur(var(--blur-lg));
 }
 
 .content {
   position: relative;
-  z-index: 2; 
+  z-index: 2;
   width: 100%;
   padding: 0 var(--container-px);
-  padding-top: 100px; 
+  padding-top: calc(var(--space-xl) * 1.2);
 }
 
 .textWrapper {
@@ -47,58 +47,58 @@
 
 .upperSubtitle {
   color: var(--color-gray-300);
-  font-size: var(--font-size-xs);
-  letter-spacing: 0.5rem; 
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  letter-spacing: 8px; 
+  font-weight: var(--fw-medium);
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-xxs);
 }
 
 .mainTitle {
-  font-size: clamp(3.5rem, 12vw, 12rem); 
-  line-height: 0.9; 
-  font-weight: 900;
+  font-size: clamp(3.5rem, 15vw, 12rem);
+  line-height: 0.9;
+  font-weight: var(--fw-extrabold);
   text-transform: uppercase;
   color: var(--color-white);
   margin: 0;
-  letter-spacing: -4px;
+  letter-spacing: var(--letter-spacing-hero); 
 }
 
 .actionArea {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: -2rem;
-  padding-right:1rem; 
+  margin-top: calc(var(--space-lg) * -1);
+  padding-right: var(--space-sm);
 }
 
 .description {
   color: var(--color-gray-300);
-  font-size:var(--font-size-sm);
+  font-size: var(--font-size-sm);
   text-align: right;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-lg);
   letter-spacing: 1px;
   line-height: 1.5;
   max-width: 250px;
 }
 
 .exploreBtn {
-  text-decoration: none; 
+  text-decoration: none;
   background: none;
   border: none;
   color: var(--color-white);
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-base); 
+  letter-spacing: var(--letter-spacing-wide);
   cursor: pointer;
   position: relative;
-  padding: 12px 0;
-  transition: all 0.3s ease;
+  padding: var(--space-sm) 0;
+  transition: var(--transition-normal);
   display: inline-block;
 }
 
 .exploreBtn:hover {
-  letter-spacing: 4px;
+  letter-spacing: calc(var(--letter-spacing-wide) * 2);
 }
 
 .btnLine {
@@ -108,36 +108,41 @@
   width: 100%;
   height: 1px;
   background: var(--color-white);
-  transform: scaleX(0.2); 
+  transform: scaleX(0.2);
   transform-origin: right;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .exploreBtn:hover .btnLine {
-  transform: scaleX(1); 
+  transform: scaleX(1);
   transform-origin: left;
 }
 
-
-
 @media (max-width: 1024px) {
   .mainTitle {
-    letter-spacing: -2px;
+    letter-spacing: var(--letter-spacing-tight);
+  }
+}
+
+@media (max-width: 1000px) {
+  .content {
+    padding-top: 0;
   }
 }
 
 @media (max-width: 768px) {
   .heroContainer {
-    --container-px: 1.5rem; 
+    --container-px: var(--space-lg);
   }
 
   .mainTitle {
-    line-height: 1.1; 
+    line-height: 1.1;
   }
 
   .actionArea {
     align-items: flex-start;
-    margin-top: 3rem;
+    margin-top: var(--space-xl);
+    padding-right: 0;
   }
 
   .description {
@@ -145,16 +150,18 @@
   }
 
   .btnLine {
-    transform-origin: left; 
+    transform-origin: left;
     transform: scaleX(0.4);
   }
 }
-@media (max-width:500px){
-  .upperSubtitle{
-    letter-spacing: 0.1rem; 
-    font-size: var(--font-size-xxs);
+
+@media (max-width: 500px) {
+  .upperSubtitle {
+    letter-spacing: 6px;
+    font-size: var(--font-size-xs);
   }
-  .exploreBtn{
-    font-size: 0.6rem;
+
+  .exploreBtn {
+    font-size: var(--font-size-sm); 
   }
 }

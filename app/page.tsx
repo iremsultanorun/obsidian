@@ -19,8 +19,6 @@ if(!response.ok){
 
 const data=await response.json()
 products=data.products.slice(0,16)
-console.log(products)
-
 }
 catch(err) {
   console.error(err)

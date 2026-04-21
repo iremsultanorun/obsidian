@@ -4,7 +4,7 @@ import styles from "./products.module.css";
 
 interface ProductsProps {
   products: IProduct[];
-  title:string;
+  title?:string;
 }
 
 export default function Products({ products,title="Curated Collection"  }: ProductsProps) {

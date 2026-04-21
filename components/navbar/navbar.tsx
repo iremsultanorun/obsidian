@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { Heart, Search, ShoppingBag } from "lucide-react";
-import { AnimatePresence, motion, Variants } from "framer-motion";
-import styles from "./Navbar.module.css"; 
+import { AnimatePresence, motion } from "framer-motion";
+import styles from "./navbar.module.css"; 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import { useBasketStore } from "@/store/useBasketStore";
 
 interface NavLink {
@@ -19,63 +18,35 @@ const navLinks: NavLink[] = [
   { name: "CURATED", href: "/curated" },
 ];
 
-const containerVariants: Variants = {
-  hover: {
-    transition: { staggerChildren: 0.04 }
-  }
-};
-
-const letterVariants: Variants = {
-  initial: { y: 0 },
-  hover: {
-    y: [0, 4, -4, 0],
-    transition: {
-      duration: 0.4,
-      ease: "easeInOut"
-    }
-  }
-};
 
 export default function Navbar() {
 
   const path = usePathname()
 
-  const { items, setActiveModal,activeModal } = useBasketStore();
+  const { items, setActiveModal,activeModal,toggleModal } = useBasketStore();
   const cartCount = items.length;
-  useEffect(() => {
-    if (activeModal==="menu") {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [activeModal]);
   return (
-    <nav className={styles.navbarContainer}>
-      <div className={styles.navbarLogo}>
+    <nav className={styles.navbarContainer} aria-label="Main navigation">
+      <div className={styles.navbarLogo} aria-label="Obsidian home">
         <Link href="/">OBSIDIAN</Link>
       </div>
 
       <ul className={styles.navbarLinks}>
         {navLinks.map((link) => (
-          <motion.li
+          <li
             key={link.name}
-            variants={containerVariants}
-            initial="initial"
-            whileHover="hover"
             className={styles.navItem}
           >
-            <Link href={link.href} className={`${styles.navLink} ${path === link.href ? styles.activeLink : ""}`}>
-              {link.name.split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  variants={letterVariants}
-                  className={styles.animLetter}
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
+            <Link href={link.href} className={`${styles.navLink} ${path === link.href ? styles.activeLink : ""}`} aria-current={path===link.href?"page":undefined}>
+            
+                 {link.name.split("").map((char, index) => (
+                  <span key={index} className={styles.animLetter}>
+                    {char}
+                  </span>
+                ))}
+           
             </Link>
-          </motion.li>
+          </li>
         ))}
       </ul>
 
@@ -84,10 +55,9 @@ export default function Navbar() {
           aria-label="Open search">
           <Search size={22} strokeWidth={1.5} />
         </button>
-       <Link href="/favorite">
-       <button className={styles.iconButton} aria-label="View favorites">
+   
+       <Link href="/favorite"className={styles.iconButton} aria-label="View favorites">
           <Heart size={22} strokeWidth={1.5} />
-        </button>
        </Link>
         <button
           className={`${styles.iconButton} ${styles.cartButton}`}
@@ -97,14 +67,15 @@ export default function Navbar() {
           <ShoppingBag id="basket-icon" size={22} strokeWidth={1.5} />
           <span className={styles.cartBadge}>
         
-          <span className={styles.badge}>{cartCount > 0 ?cartCount:0}</span>
+          <span className={styles.badge}>{cartCount}</span>
      
             </span>
         </button>
         <button
           className={styles.menuButton}
-        onClick={()=>{setActiveModal("menu")}}
+          onClick={() => toggleModal("menu")}
           aria-label="Toggle menu"
+          aria-expanded={activeModal==="menu"}
         >
           <div className={`${styles.hamburger} ${activeModal==="menu" ? styles.open : ""}`}>
             <span></span>

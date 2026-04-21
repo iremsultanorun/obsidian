@@ -6,9 +6,13 @@ import styles from "./hero.module.css";
 
 export default function Hero() {
   return (
-    <section className={styles.heroContainer}>
+    <section className={styles.heroContainer}   aria-labelledby="hero-title"
+      aria-describedby="hero-subtitle"
+    >
       <div className={styles.circleContainer}>
-        <div className={styles.bigCircle}></div>
+        <div className={styles.bigCircle}
+          aria-hidden="true"
+        ></div>
       </div>
 
       <div className={styles.content}>
@@ -18,6 +22,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className={styles.upperSubtitle}
+              id="hero-subtitle"
           >
             WINTER COLLECTION 2026
           </motion.span>
@@ -27,6 +32,7 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className={styles.mainTitle}
+             id="hero-title"
           >
             THE NEW <br /> FORM
           </motion.h1>
@@ -44,9 +50,10 @@ export default function Hero() {
             <Link 
               href="/#products-section" 
               className={styles.exploreBtn}
+              aria-label="Explore winter collection 2026 products"
             >
               EXPLORE NOW
-              <span className={styles.btnLine}></span>
+              <span className={styles.btnLine}   aria-hidden="true"></span>
             </Link>
           </motion.div>
         </div>
