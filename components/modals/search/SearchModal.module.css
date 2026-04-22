@@ -21,9 +21,9 @@
   gap: var(--space-lg);
 }
 .searchContainer{
-  display: grid;
-  grid-template-columns: .5fr 2fr; 
-  align-items: center;
+display: flex;
+align-items: center;
+justify-content: flex-start;
   gap: var(--space-sm);
 }
 .searchIcon {
